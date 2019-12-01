@@ -1,5 +1,5 @@
 {
-  "name": "js-utils",
+  "name": "@tonix/js-utils",
   "version": "1.0.0",
   "description": "A collection of JS utility functions to be used across several applications or libraries.",
   "keywords": [
