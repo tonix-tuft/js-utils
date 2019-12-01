@@ -1,7 +1,7 @@
 const webpack = require("webpack");
-const libraryName = "js-utils";
+const libraryName = "js-utl";
 let outputFile;
-const library = "JSUtils";
+const library = "JSUtl";
 const srcEntryPoint = "index.js";
 const path = require("path");
 

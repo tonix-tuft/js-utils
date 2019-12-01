@@ -1,5 +1,5 @@
 {
-  "name": "@tonix/js-utils",
+  "name": "@tonix/js-utl",
   "version": "1.0.0",
   "description": "A collection of JS utility functions to be used across several applications or libraries.",
   "keywords": [
@@ -7,6 +7,7 @@
     "js",
     "utils",
     "utility",
+    "utl",
     "functions",
     "utility-functions"
   ],
@@ -16,7 +17,7 @@
   "module": "./src/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tonix-tuft/js-utils.git"
+    "url": "https://github.com/tonix-tuft/js-utl.git"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -35,7 +36,7 @@
     "webpack-cli": "^3.3.10"
   },
   "bugs": {
-    "url": "https://github.com/tonix-tuft/js-utils/issues"
+    "url": "https://github.com/tonix-tuft/js-utl/issues"
   },
-  "homepage": "https://github.com/tonix-tuft/js-utils#readme"
+  "homepage": "https://github.com/tonix-tuft/js-utl#readme"
 }
