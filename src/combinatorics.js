@@ -27,7 +27,7 @@
  * Combinatorics utility functions.
  */
 
-import { arrayOrArrayLike } from "./core";
+import { arrayOrArrayLike, nestedMapSet, nestedMapHas } from "./core";
 
 /**
  * Yields all the combinations of an array without repetitions (binomial coefficient).
@@ -123,4 +123,36 @@ export const uniqueProgressiveIncrementalCombinations = items => {
 
   ret.push(last);
   return ret;
+};
+
+/**
+ * Yields all the subsequences of the given array of items.
+ *
+ * @param {Array} items An array of items to use to yield subsequences.
+ * @yields {Array} The next subsequence.
+ */
+export const yieldAllSubsequences = function*(items) {
+  const l = items.length;
+  for (let i = 0; i <= l; i++) {
+    for (const combination of yieldCombinationsWithoutRepetition(items, i)) {
+      yield combination;
+    }
+  }
+};
+
+/**
+ * Yields only the unique subsequences of the given array of items.
+ *
+ * @param {Array} items An array of items to use to yield subsequences.
+ * @yields {Array} The next unique subsequence.
+ */
+export const yieldUniqueSubsequences = function*(items) {
+  const map = new Map();
+  yield [];
+  for (const subsequence of yieldAllSubsequences(items)) {
+    if (!nestedMapHas(map, subsequence)) {
+      nestedMapSet(map, subsequence, true);
+      yield subsequence;
+    }
+  }
 };

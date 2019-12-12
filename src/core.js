@@ -872,3 +872,49 @@ export function shallowObjectDiff(objA, objB) {
   }
   return diff;
 }
+
+/**
+ * Tests if a map has the given nested keys.
+ *
+ * @param {Map|WeakMap} map A map or weak map.
+ * @param {Array} keys Array of keys to check. Each key represents a nested map.
+ * @return {boolean} "true" if all the nested keys exist, false otherwise.
+ */
+export const nestedMapHas = (map, keys) => {
+  let current = map;
+  let i = 0;
+  while (
+    (current instanceof Map || current instanceof WeakMap) &&
+    current.has(keys[i])
+  ) {
+    current = current.get(keys[i]);
+    i++;
+  }
+  return i == keys.length;
+};
+
+/**
+ * Sets a nested value on a nested map.
+ *
+ * @param {Map|WeakMap} map A map or weak map.
+ * @param {Array} keys Array of keys to traverse. Each key will lead to a nested map.
+ * @param {*} value The value to set at the inner key.
+ * @return {undefined}
+ */
+export const nestedMapSet = (map, keys, value) => {
+  let i = 0;
+  let current = map;
+  while (i < keys.length - 1) {
+    const key = keys[i];
+    const nested = current.get(key);
+    if (nested instanceof Map || nested instanceof WeakMap) {
+      current = nested;
+    } else {
+      const newMap = new Map();
+      current.set(key, newMap);
+      current = newMap;
+    }
+    i++;
+  }
+  current.set(keys[i], value);
+};
