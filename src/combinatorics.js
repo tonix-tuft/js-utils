@@ -27,7 +27,7 @@
  * Combinatorics utility functions.
  */
 
-import { arrayOrArrayLike, nestedMapSet, nestedMapHas } from "./core";
+import { arrayOrArrayLike, nestedMapSet, nestedMapHas, mapYield } from "./core";
 
 /**
  * Yields all the combinations of an array without repetitions (binomial coefficient).
@@ -87,7 +87,7 @@ export const yieldCombinationsWithoutRepetition = function*(
  *
  * @param {Array} items An array of items.
  * @return {Array[]} An array of arrays, each representing a unique progressive incremental combination.
- *                   An empty array is returned if the items array is empty.
+ *                   An empty array is returned if the given items array is empty.
  */
 export const uniqueProgressiveIncrementalCombinations = items => {
   const len = items.length;
@@ -123,6 +123,55 @@ export const uniqueProgressiveIncrementalCombinations = items => {
 
   ret.push(last);
   return ret;
+};
+
+/**
+ * Yields unique, progressive and incremental combinations.
+ *
+ * @param {Array} items An array of items.
+ * @param {bool} yieldCopy True if some of the yielded combinations should be a copy (default)
+ *                         of the corresponding internal array used during the generation of the current combination
+ *                         or that same array should be returned (if "yieldCopy" is "false").
+ * @yields {Array} An array, each representing the next unique progressive incremental combination.
+ *                 An empty array is yielded if the given items array is empty.
+ */
+export const yieldUniqueProgressiveIncrementalCombinations = function*(
+  items,
+  yieldCopy = true
+) {
+  const len = items.length;
+  if (len === 0) {
+    return;
+  }
+
+  const last = yieldCopy ? arrayOrArrayLike(items) : items; // Shallow copy/clone of the given array.
+  if (len === 1) {
+    // [1] => [[1]]
+    yield last;
+    return;
+  }
+
+  // [1], [2], [3], ..., [n]
+  yield* mapYield(items, item => [item]);
+
+  if (len > 2) {
+    // There  are at least three items.
+    for (
+      let numberOfItemsPerCombination = 2;
+      numberOfItemsPerCombination < len;
+      numberOfItemsPerCombination++
+    ) {
+      for (const combination of yieldCombinationsWithoutRepetition(
+        items,
+        numberOfItemsPerCombination,
+        yieldCopy
+      )) {
+        yield combination;
+      }
+    }
+  }
+
+  yield last;
 };
 
 /**

@@ -72,7 +72,8 @@ export {
   shallowEqual,
   shallowObjectDiff,
   nestedMapHas,
-  nestedMapSet
+  nestedMapSet,
+  mapYield
 } from "./core";
 export {
   _,
@@ -154,6 +155,7 @@ export { getLuminance } from "./color";
 export {
   yieldCombinationsWithoutRepetition,
   uniqueProgressiveIncrementalCombinations,
+  yieldUniqueProgressiveIncrementalCombinations,
   yieldAllSubsequences,
   yieldUniqueSubsequences
 } from "./combinatorics";

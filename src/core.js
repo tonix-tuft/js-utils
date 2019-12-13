@@ -918,3 +918,22 @@ export const nestedMapSet = (map, keys, value) => {
   }
   current.set(keys[i], value);
 };
+
+/**
+ * Yields values of an array mapping the yielded value.
+ *
+ * @param {Array} items An array of items.
+ * @param {*} fn The function to call.
+ *               The function will receive, in order the nth item,
+ *               the index of the item in the array of items and the whole items array
+ *               as parameters.
+ * @param {*} thisArg Optional this arg of the called function (defaults to undefined).
+ * @yields {*} The next yielded mapped item.
+ */
+export function* mapYield(items, fn, thisArg = void 0) {
+  items.map();
+  const boundFn = fn.bind(thisArg);
+  for (let i = 0; i < items.length; i++) {
+    yield boundFn(items[i], i, items);
+  }
+}
