@@ -937,3 +937,13 @@ export function* mapYield(items, fn, thisArg = void 0) {
     yield boundFn(items[i], i, items);
   }
 }
+
+/**
+ * Casts a value to a string.
+ *
+ * @param {*} v A value.
+ * @return {string} The string representation of the value.
+ */
+export function str(v) {
+  return "" + v;
+}

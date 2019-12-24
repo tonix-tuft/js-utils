@@ -73,7 +73,8 @@ export {
   shallowObjectDiff,
   nestedMapHas,
   nestedMapSet,
-  mapYield
+  mapYield,
+  str
 } from "./core";
 export {
   _,
@@ -123,11 +124,7 @@ export {
   appendEncodedJSONFragmentToURI,
   getDecodedJSONFromFragmentURI,
   getQueryStringArgsMultiDim,
-  cursorFocus,
-  classNames,
-  mergeClassNameProp,
-  reactComponentName,
-  getDisplayName
+  cursorFocus
 } from "./web";
 export { randomInt, randomStr, randomDifferentFromValue } from "./rand";
 export { time, msToTime, millisecToSec } from "./time";
@@ -159,3 +156,10 @@ export {
   yieldAllSubsequences,
   yieldUniqueSubsequences
 } from "./combinatorics";
+export {
+  classNames,
+  mergeClassNameProp,
+  reactComponentName,
+  getDisplayName,
+  reactChildrenMap
+} from "./react";
