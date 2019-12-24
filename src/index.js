@@ -156,10 +156,3 @@ export {
   yieldAllSubsequences,
   yieldUniqueSubsequences
 } from "./combinatorics";
-export {
-  classNames,
-  mergeClassNameProp,
-  reactComponentName,
-  getDisplayName,
-  reactChildrenMap
-} from "./react";
