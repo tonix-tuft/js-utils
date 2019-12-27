@@ -72,6 +72,7 @@ export function minDelayPromise(promise, minDelay) {
 export function maxDelayFallbackPromise({
   promise,
   maxDelayMs,
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   onFallback = () => {},
   fallbackMinDelayMs
 } = {}) {

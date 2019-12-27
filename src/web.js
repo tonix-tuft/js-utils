@@ -28,7 +28,6 @@
  */
 
 import { config, uniqueId, isEmpty, isJSONString, isObject } from "./core";
-import { trim } from "./string";
 
 /**
  * Builds a form data instance or object recursively.
