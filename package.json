@@ -13,8 +13,8 @@
   ],
   "author": "Anton Bagdatyev (Tonix-Tuft)",
   "license": "MIT",
-  "main": "./dist/js-utl.js",
-  "module": "./src/index.js",
+  "main": "dist/js-utl",
+  "module": "src/index",
   "repository": {
     "type": "git",
     "url": "https://github.com/tonix-tuft/js-utl.git"
