@@ -1,6 +1,6 @@
 {
   "name": "js-utl",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "A collection of JS utility functions to be used across several applications or libraries.",
   "keywords": [
     "javascript",
@@ -13,8 +13,8 @@
   ],
   "author": "Anton Bagdatyev (Tonix-Tuft)",
   "license": "MIT",
-  "main": "./dist/index.js",
-  "module": "./src/index.js",
+  "main": "./dist/js-utl.js",
+  "module": "./src/js-utl.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/tonix-tuft/js-utl.git"
