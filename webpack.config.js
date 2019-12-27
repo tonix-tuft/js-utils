@@ -22,7 +22,7 @@ var config = {
     filename: outputFile,
     library: library,
     libraryTarget: "umd",
-    globalObject: "this",
+    globalObject: `(typeof self !== 'undefined' ? self : this)`,
     umdNamedDefine: true
   },
   module: {
