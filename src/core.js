@@ -831,6 +831,26 @@ export function shallowEqual(objA, objB) {
 }
 
 /**
+ * Tests if a partial object is a subset of another object.
+ *
+ * @param {Object} obj An object.
+ * @param {Object} partialObj A partial object which may not have all the keys of "obj"
+ *                            or may even have different keys, or keys with different values.
+ * @return {boolean} False if "partialObj" has a key which is not in "obj",
+ *                   or has at least one key which is also in "obj" but with a different value
+ *                   (shallow comparison), true otherwise.
+ */
+export function partialShallowEqual(obj, partialObj) {
+  return shallowEqual(
+    Object.keys(partialObj).reduce((carry, key) => {
+      carry[key] = obj[key];
+      return carry;
+    }, {}),
+    partialObj
+  );
+}
+
+/**
  * Returns a shallow object diff, returning an object with two keys "objA" and "objB",
  * each containing an object with all the properties of one of the two objects which are not within
  * the other object, respectively.
