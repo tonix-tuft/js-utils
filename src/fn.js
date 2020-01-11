@@ -349,7 +349,7 @@ export const POJOCurry = (
  * @param  {...Function} fns A list of higher order functions or HOCs to compose.
  * @return {Function|undefined} A function composed of all the functions, higher order functions or HOCs
  *                              used for composition.
- *                              If not functions are given, "undefined" will be returned.
+ *                              If no functions are given, "undefined" will be returned.
  */
 export const compose = (...fns) => (...args) => {
   let outerArgs = args;
