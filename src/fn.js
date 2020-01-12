@@ -133,6 +133,7 @@ export const curry = (
     function curriedFn(...addedArgs) {
       let newExpectedNumberOfArgs = expectedNumberOfArgs;
       let newNextParameterIndex = nextParameterIndex;
+      let newPlaceholdersIndices = null;
       let argsRequiredChange = false;
       curriedFnFirstCall &&
         ((onCurriedFnFirstCall &&
@@ -149,17 +150,27 @@ export const curry = (
           // Argument is an effective argument consuming a previously set placeholder.
           onEffectiveArgAdded &&
             onEffectiveArgAdded({ addedArg, args, fn, curriedFn });
-          const [argIndex, ...rest] = placeholdersIndices;
+          let argIndex;
+          if (newPlaceholdersIndices === null) {
+            const [firstIndex, ...rest] = placeholdersIndices;
+            argIndex = firstIndex;
+            newPlaceholdersIndices = rest;
+          } else {
+            argIndex = newPlaceholdersIndices.shift();
+          }
           args[argIndex] = addedArg;
-          placeholdersIndices = rest;
           numberOfConsumablePlaceholders--;
           newExpectedNumberOfArgs--;
         } else {
           if (isPlaceholder) {
             // Argument is a new placeholder.
-            placeholdersIndices = placeholdersIndices.concat(
-              newNextParameterIndex
-            );
+            if (newPlaceholdersIndices === null) {
+              newPlaceholdersIndices = placeholdersIndices.concat(
+                newNextParameterIndex
+              );
+            } else {
+              newPlaceholdersIndices.push(newNextParameterIndex);
+            }
             onPlaceholder && onPlaceholder({ args, fn, curriedFn });
           } else {
             // Argument is an effective argument.
@@ -177,7 +188,9 @@ export const curry = (
         curriedFn,
         newExpectedNumberOfArgs,
         newNextParameterIndex,
-        placeholdersIndices,
+        newPlaceholdersIndices === null
+          ? [...placeholdersIndices]
+          : newPlaceholdersIndices,
         ...args
       );
     };
