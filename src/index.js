@@ -66,6 +66,7 @@ export {
   isStrictlyTrue,
   arrayFindReverse,
   isTruthy,
+  allTruthy,
   isJSONString,
   noOpFn,
   is,

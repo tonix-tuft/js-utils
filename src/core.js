@@ -715,6 +715,16 @@ export function isTruthy(value) {
 }
 
 /**
+ * Tests if all the given values are truthy.
+ * 
+ * @param {...*} values The values.
+ * @return {boolean} "true" if and only if all the values are truthy.
+ */
+export function allTruthy(...values) {
+  return values.every(isTruthy);
+}
+
+/**
  * Tests if a string is a valid JSON string.
  *
  * @param {string} str A string.
