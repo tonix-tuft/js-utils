@@ -646,6 +646,16 @@ export function isIntegerOrIntegerStr(a) {
 }
 
 /**
+ * Tests if the given value is callable.
+ *
+ * @param {*} v The value.
+ * @return {boolean} True if callable, false otherwise.
+ */
+export function isCallable(v) {
+  return typeof v === "function";
+}
+
+/**
  * Finds the index of a value in an array without type juggling
  * (i.e. like "Array.prototype.indexOf", but using "==" for equality comparison).
  *
@@ -716,7 +726,7 @@ export function isTruthy(value) {
 
 /**
  * Tests if all the given values are truthy.
- * 
+ *
  * @param {...*} values The values.
  * @return {boolean} "true" if and only if all the values are truthy.
  */

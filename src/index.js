@@ -61,6 +61,7 @@ export {
   isInt,
   ctypeDigit,
   isIntegerOrIntegerStr,
+  isCallable,
   findIndex,
   firstPropValue,
   isStrictlyTrue,
