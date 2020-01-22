@@ -735,6 +735,16 @@ export function allTruthy(...values) {
 }
 
 /**
+ * Tests if all the given values are not undefined.
+ *
+ * @param {...*} values The values.
+ * @return {boolean} "true" if and only if all the values are not undefined.
+ */
+export function allNotUndefined(...values) {
+  return values.every(value => typeof value !== "undefined");
+}
+
+/**
  * Tests if a string is a valid JSON string.
  *
  * @param {string} str A string.
