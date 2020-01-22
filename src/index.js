@@ -160,3 +160,4 @@ export {
   yieldAllSubsequences,
   yieldUniqueSubsequences
 } from "./combinatorics";
+export { round } from "./number";
