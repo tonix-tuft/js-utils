@@ -78,7 +78,8 @@ export {
   nestedMapHas,
   nestedMapSet,
   mapYield,
-  str
+  str,
+  mapObject
 } from "./core";
 export {
   _,

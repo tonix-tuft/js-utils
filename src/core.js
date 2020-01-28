@@ -997,3 +997,19 @@ export function* mapYield(items, fn, thisArg = void 0) {
 export function str(v) {
   return "" + v;
 }
+
+/**
+ * Maps an object, executing a function on each of its properties
+ * returning a new mapped object.
+ *
+ * @param {Object} obj The object to map.
+ * @param {Function} fn The function to use for the mapping.
+ * @return {Object} The new mapped object.
+ */
+export const mapObject = (obj, fn) =>
+  Object.fromEntries(
+    Object.entries(obj).map(([key, value], index) => [
+      key,
+      fn(value, key, index)
+    ])
+  );
