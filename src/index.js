@@ -79,7 +79,8 @@ export {
   nestedMapSet,
   mapYield,
   str,
-  mapObject
+  mapObject,
+  propSelection
 } from "./core";
 export {
   _,

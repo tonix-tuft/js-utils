@@ -1013,3 +1013,27 @@ export const mapObject = (obj, fn) =>
       fn(value, key, index)
     ])
   );
+
+/**
+ * Selects the truthy properties of an object or the properties of an object
+ * passing a test specified with a callback function.
+ *
+ * @param {Object} obj The input object.
+ * @param {Function} fn A function which will receive two parameters:
+ *
+ *                          - value: The current value of the input object for a given property;
+ *                          - prop: The name of the current property of the input object.
+ *
+ *                      The function will have to return a boolean "true" indicating that this value
+ *                      and property has to be included in the returned object, or "false" otherwise.
+ *
+ * @return {Object} An object having only the properties which passed the test
+ *                  implemented by the "fn" callback function.
+ */
+export const propSelection = (obj, fn = isTruthy) =>
+  Object.keys(obj).reduce((carry, key) => {
+    if (fn(obj[key], key)) {
+      carry[key] = obj[key];
+    }
+    return carry;
+  }, {});
