@@ -46,6 +46,7 @@ export {
   cloneObjDeeply,
   deepObjectExtend,
   deepObjectCloningExtend,
+  extend,
   cloneArray,
   arraySliceFromValueToValue,
   includesTypeCoercion,

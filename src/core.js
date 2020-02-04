@@ -436,6 +436,20 @@ export function deepObjectCloningExtend(...args) {
 }
 
 /**
+ * Extends a destination object with the provided source objects.
+ *
+ * @param {Object} destinationObj The destination object.
+ * @param {...Object} sourceObjects The source objects.
+ * @return Object The destination object "destinationObj" given as parameter after extension.
+ */
+export function extend(destinationObj, ...sourceObjects) {
+  for (const sourceObject of sourceObjects) {
+    deepObjectExtend(destinationObj, sourceObject);
+  }
+  return destinationObj;
+}
+
+/**
  * Clones an array.
  *
  * @param {Array} arr The array to clone.
