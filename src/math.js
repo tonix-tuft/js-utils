@@ -24,7 +24,7 @@
  */
 
 /**
- * Utility functions for numbers.
+ * Mathematical utility functions.
  */
 
 /**
@@ -32,8 +32,19 @@
  *
  * @param {number} number The number to round.
  * @param {number} precision The decimal precision.
+ * @return {number} The rounded number.
  */
 export function round(number, precision = 0) {
   const factor = 10 ** precision;
   return Math.round(number * factor) / factor;
+}
+
+/**
+ * Sums two or more numbers.
+ *
+ * @param {...number} numbers The numbers to sum.
+ * @return {number} The sum.
+ */
+export function sum(...numbers) {
+  return numbers.reduce((carry, num) => carry + num);
 }
