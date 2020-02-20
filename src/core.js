@@ -517,7 +517,7 @@ export function isArray(something) {
  * Tests whether all the elements of an array are coercible to a number or not.
  *
  * @param {Array} array An array.
- * @return {bool} True if all the elements are coercible to a number, false otherwise.
+ * @return {boolean} True if all the elements are coercible to a number, false otherwise.
  */
 export function areArrayItemsAllCoercibleToNumber(array) {
   const res = !array.some(isNaN);

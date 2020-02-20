@@ -143,7 +143,8 @@ export {
   trimLeft,
   trimRight,
   concatWithInnerOuterSeparators,
-  optionsValueLabel
+  optionsValueLabel,
+  startsWith
 } from "./string";
 export { googleMapBestZoomLevelFromBounds } from "./google";
 export { delay, debounce, throttle } from "./callback";

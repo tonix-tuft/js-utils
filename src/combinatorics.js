@@ -37,7 +37,7 @@ import { arrayOrArrayLike, nestedMapSet, nestedMapHas, mapYield } from "./core";
  * @param {number} numberOfItemsPerCombination The number of elements in each combination
  *                                             (this function assumes it to be less than "items.length"
  *                                             and greater than 0).
- * @param {bool} yieldCopy True if the yielded combination should be a copy (default) or
+ * @param {boolean} yieldCopy True if the yielded combination should be a copy (default) or
  *                         the internal array used during the generation of the current combination.
  * @yields {Array} The next combination.
  */
@@ -129,7 +129,7 @@ export const uniqueProgressiveIncrementalCombinations = items => {
  * Yields unique, progressive and incremental combinations.
  *
  * @param {Array} items An array of items.
- * @param {bool} yieldCopy True if some of the yielded combinations should be a copy (default)
+ * @param {boolean} yieldCopy True if some of the yielded combinations should be a copy (default)
  *                         of the corresponding internal array used during the generation of the current combination
  *                         or that same array should be returned (if "yieldCopy" is "false").
  * @yields {Array} An array, each representing the next unique progressive incremental combination.

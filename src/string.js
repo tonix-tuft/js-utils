@@ -222,3 +222,14 @@ export function optionsValueLabel({
   }
   return options;
 }
+
+/**
+ * Tests if a string starts with another
+ *
+ * @param {string} haystack The haystack string.
+ * @param {string} needle The needle string.
+ * @return {boolean} True if the haystack string starts with needle, false otherwise.
+ */
+export function startsWith(haystack, needle) {
+  return haystack.indexOf(needle, 0) === 0;
+}
