@@ -357,16 +357,18 @@ export const POJOCurry = (
 };
 
 /**
- * A utility function which composes functions, higher order functions or HOCs.
+ * A utility function which composes functions or higher order functions.
  *
- * @param  {...Function} fns A list of higher order functions or HOCs to compose.
- * @return {Function|undefined} A function composed of all the functions, higher order functions or HOCs
+ * @param  {...Function|...Function[]} fns A list of functions or higher order functions or arrays of functions
+ *                                         (arrays will be flattened) to compose.
+ * @return {Function|undefined} A function composed of all the functions or higher order functions
  *                              used for composition.
  *                              If no functions are given, "undefined" will be returned.
  */
 export const compose = (...fns) => (...args) => {
   let outerArgs = args;
   let hoFn = void 0;
+  fns = fns.flat(1);
   for (let i = fns.length - 1; i >= 0; i--) {
     const fn = fns[i];
     hoFn = fn(...outerArgs);
@@ -378,11 +380,13 @@ export const compose = (...fns) => (...args) => {
 /**
  * A utility function which pipes functions.
  *
- * @param  {...Function} fns A list of functions to pipe.
+ * @param  {...Function|...Function[]} fns A list of functions or arrays of functions (arrays will be flattened)
+ *                                         to pipe.
  * @return {Function} A function representing the pipe.
  *                    If not functions are given, "undefined" will be returned.
  */
 export const pipe = (...functions) => (...args) => {
+  functions = functions.flat(1);
   return functions.length
     ? functions.reduce((arg, fn) => [fn(...arg)], args)[0]
     : void 0;
