@@ -110,3 +110,34 @@ export function noncanonicalUUID() {
   const UUID = uuid();
   return UUID + "-" + noncanonicalUUIDCounter++;
 }
+
+/**
+ * Shuffles an array randomly modifing the given array.
+ *
+ * @param {Array} array The input array.
+ * @return {Array} A reference to the same array given as input,
+ *                 but with its elements randomly shuffled.
+ */
+const shuffleArrayRandomly = array => {
+  let i = array.length,
+    temporaryValue,
+    randomIndex;
+  while (0 !== i) {
+    randomIndex = Math.floor(Math.random() * i);
+    i--;
+    temporaryValue = array[i];
+    array[i] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+  return array;
+};
+
+/**
+ * Returns an array with the elements of the given array randomly shuffled.
+ *
+ * @param {Array} array An array.
+ * @return {Array} A new array with the same elements of the input array, but randomly shuffled.
+ */
+export function randomArrayShuffle(array) {
+  return shuffleArrayRandomly(Object.keys(array)).map(i => array[i]);
+}

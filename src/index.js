@@ -82,7 +82,7 @@ export {
   str,
   mapObject,
   propSelection
-} from "./core";
+} from "./modules/core";
 export {
   _,
   proceedCallingFn,
@@ -94,15 +94,15 @@ export {
   liftBinaryFn,
   juxt,
   converge
-} from "./fn";
-export { stringHashArray, hashString, onePassStringHash } from "./hash";
+} from "./modules/fn";
+export { stringHashArray, hashString, onePassStringHash } from "./modules/hash";
 export {
   timeout,
   minDelayPromise,
   maxDelayFallbackPromise,
   applyAsync,
   composeAsync
-} from "./promise";
+} from "./modules/promise";
 export {
   buildQueryString,
   formData,
@@ -132,9 +132,14 @@ export {
   getDecodedJSONFromFragmentURI,
   getQueryStringArgsMultiDim,
   cursorFocus
-} from "./web";
-export { randomInt, randomStr, randomDifferentFromValue } from "./rand";
-export { time, msToTime, millisecToSec } from "./time";
+} from "./modules/web";
+export {
+  randomInt,
+  randomStr,
+  randomDifferentFromValue,
+  randomArrayShuffle
+} from "./modules/rand";
+export { time, msToTime, millisecToSec } from "./modules/time";
 export {
   escapeRegExp,
   trimCharacterMask,
@@ -145,23 +150,23 @@ export {
   concatWithInnerOuterSeparators,
   optionsValueLabel,
   startsWith
-} from "./string";
-export { googleMapBestZoomLevelFromBounds } from "./google";
-export { delay, debounce, throttle } from "./callback";
-export { basename, pathinfo, filenameExtension, dirname } from "./path";
-export { b2d, d2b } from "./convert";
+} from "./modules/string";
+export { googleMapBestZoomLevelFromBounds } from "./modules/google";
+export { delay, debounce, throttle } from "./modules/callback";
+export { basename, pathinfo, filenameExtension, dirname } from "./modules/path";
+export { b2d, d2b } from "./modules/convert";
 export {
   turnNthBitOff,
   turnNthBitOn,
   toggleNthBit,
   checkNthBitOn
-} from "./bitwise";
-export { getLuminance } from "./color";
+} from "./modules/bitwise";
+export { getLuminance } from "./modules/color";
 export {
   yieldCombinationsWithoutRepetition,
   uniqueProgressiveIncrementalCombinations,
   yieldUniqueProgressiveIncrementalCombinations,
   yieldAllSubsequences,
   yieldUniqueSubsequences
-} from "./combinatorics";
-export { round, sum } from "./math";
+} from "./modules/combinatorics";
+export { round, sum } from "./modules/math";
