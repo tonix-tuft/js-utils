@@ -230,22 +230,6 @@ export function nestedObjectConstructValue(
 }
 
 /**
- * Unshifts an array.
- *
- * @param {Array} arr The array.
- * @param {*} item The item to unshift.
- * @return {undefined}
- */
-export function unshiftArray(arr, item) {
-  let len = arr.length;
-  while (len) {
-    arr[len] = arr[len - 1];
-    len--;
-  }
-  arr[0] = item;
-}
-
-/**
  * Clones an object deeply using the JSON API.
  *
  * @param {Object} obj The object to clone.
@@ -450,41 +434,6 @@ export function extend(destinationObj, ...sourceObjects) {
 }
 
 /**
- * Clones an array.
- *
- * @param {Array} arr The array to clone.
- * @return {Array} The cloned array.
- */
-export function cloneArray(arr) {
-  return arr.slice(0);
-}
-
-/**
- * Gets a slice of an array from a value up until another.
- *
- * @param {Array} arr The input array.
- * @param {number} from The "from" lower value.
- * @param {number} to The "two" upper value.
- * @return {Array} The slice as a new array.
- */
-export function arraySliceFromValueToValue(arr, from, to) {
-  const ret = [];
-  let include = false;
-  for (const value of arr) {
-    if (!include && value == from) {
-      ret.push(value);
-      include = true;
-    } else if (include && value == to) {
-      ret.push(value);
-      break;
-    } else if (include) {
-      ret.push(value);
-    }
-  }
-  return ret;
-}
-
-/**
  * Like "Array.prototype.includes", but with type coercion.
  *
  * @param {Array} array The array.
@@ -498,30 +447,6 @@ export function includesTypeCoercion(array, value) {
     }
   }
   return false;
-}
-
-/**
- * Tests to see whether something is an array.
- *
- * @param {*} something A variable to check wether it is an array.
- * @return {boolean} True if the passed in parameter is an array, false otherwise.
- */
-export function isArray(something) {
-  return (
-    Object.prototype.toString.call(something) ===
-    Object.prototype.toString.call([])
-  );
-}
-
-/**
- * Tests whether all the elements of an array are coercible to a number or not.
- *
- * @param {Array} array An array.
- * @return {boolean} True if all the elements are coercible to a number, false otherwise.
- */
-export function areArrayItemsAllCoercibleToNumber(array) {
-  const res = !array.some(isNaN);
-  return res;
 }
 
 /**
@@ -590,16 +515,6 @@ export function setNestedPropertyValue(data, props, value) {
 }
 
 /**
- * Copies an array or converts an array-like object to a new array.
- *
- * @param {*} arg Array or array-like object.
- * @return {Array} An array.
- */
-export function arrayOrArrayLike(arg) {
-  return Array.prototype.slice.call(arg);
-}
-
-/**
  * Tests whether a value is undefined or not.
  *
  * @param {*} value A value
@@ -607,26 +522,6 @@ export function arrayOrArrayLike(arg) {
  */
 export function isUndefined(value) {
   return typeof value === "undefined";
-}
-
-/**
- * Returns the last element of the given array.
- *
- * @param {Array} array An array.
- * @return {*} The last element of the array or undefined if there isn't one.
- */
-export function lastOfArray(array) {
-  return array[array.length - 1];
-}
-
-/**
- * Returns the first element of the given array.
- *
- * @param {Array} array An array.
- * @return {*} The first element of the array or undefined if there isn't one.
- */
-export function firstOfArray(array) {
-  return array[0];
 }
 
 /**
@@ -703,29 +598,6 @@ export function firstPropValue(obj) {
  */
 export function isStrictlyTrue(value) {
   return value === true;
-}
-
-/**
- * Like {@link Array.prototype.find}, but in reverse order.
- *
- * @param {Array} array An array.
- * @param {Function} fn Function to use for the test. The function will receive the array element as parameter.
- * @return {*} The first element which satisfies the test in the array by seeking for the element in reverse order
- *             (i.e. the last element of the array for which the test is satisfied).
- *             If no element satisfies the test, "undefined" is returned.
- */
-export function arrayFindReverse(array, fn) {
-  let l = array.length;
-
-  let ret = void 0;
-  while (l) {
-    l--;
-    if (fn(array[l])) {
-      ret = array[l];
-      break;
-    }
-  }
-  return ret;
 }
 
 /**

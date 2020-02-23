@@ -37,7 +37,6 @@ export {
   deepArrayCompare,
   deepObjectCompare,
   nestedObjectConstructValue,
-  unshiftArray,
   cloneDeeplyJSON,
   isReferenceType,
   isPrimitiveType,
@@ -47,18 +46,11 @@ export {
   deepObjectExtend,
   deepObjectCloningExtend,
   extend,
-  cloneArray,
-  arraySliceFromValueToValue,
   includesTypeCoercion,
-  isArray,
-  areArrayItemsAllCoercibleToNumber,
   nestedPropertyValue,
   hasNestedPropertyValue,
   setNestedPropertyValue,
-  arrayOrArrayLike,
   isUndefined,
-  lastOfArray,
-  firstOfArray,
   isInt,
   ctypeDigit,
   isIntegerOrIntegerStr,
@@ -66,7 +58,6 @@ export {
   findIndex,
   firstPropValue,
   isStrictlyTrue,
-  arrayFindReverse,
   isTruthy,
   allTruthy,
   allNotUndefined,
@@ -171,3 +162,16 @@ export {
   yieldUniqueSubsequences
 } from "./modules/combinatorics";
 export { round, sum } from "./modules/math";
+export {
+  unshiftArray,
+  cloneArray,
+  arraySliceFromValueToValue,
+  areArrayItemsAllCoercibleToNumber,
+  isArray,
+  arrayOrArrayLike,
+  lastOfArray,
+  firstOfArray,
+  arrayFindReverse,
+  arrayMax,
+  arrayMin
+} from "./modules/array";

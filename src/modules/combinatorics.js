@@ -27,7 +27,8 @@
  * Combinatorics utility functions.
  */
 
-import { arrayOrArrayLike, nestedMapSet, nestedMapHas, mapYield } from "./core";
+import { nestedMapSet, nestedMapHas, mapYield } from "./core";
+import { arrayOrArrayLike } from "./array";
 
 /**
  * Yields all the combinations of an array without repetitions (binomial coefficient).

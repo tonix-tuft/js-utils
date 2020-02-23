@@ -1,3 +1,5 @@
+import { isArray } from "./array";
+
 /*
  * Copyright (c) 2020 Anton Bagdatyev (Tonix-Tuft)
  *
@@ -26,8 +28,6 @@
 /**
  * Utility functions for working with strings.
  */
-
-import { isArray } from "./core";
 
 /**
  * Escapes special characters for a JS regex.
