@@ -441,9 +441,9 @@ export const converge = (multiArgFn, fns) => (...params) =>
  * Executes a callback if a POJO object has a property.
  *
  * @param {Object} POJO A POJO object.
- * @return {function(string|number): function(Function): *} A function which receives the property
- *                                                          and returns and returns a function receiving the callback
- *                                                          function ("fn") to execute.
+ * @return {(prop: string|number) => (fn: Function) => *} A function which receives the property
+ *                                                        and returns and returns a function receiving the callback
+ *                                                        function ("fn") to execute.
  */
 export const execIfPOJOHas = POJO => prop => fn =>
   Object.prototype.hasOwnProperty.call(POJO, prop) && fn(POJO[prop], POJO);
