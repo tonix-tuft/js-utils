@@ -93,7 +93,8 @@ export {
   pick,
   liftBinaryFn,
   juxt,
-  converge
+  converge,
+  execIfPOJOHas
 } from "./modules/fn";
 export { stringHashArray, hashString, onePassStringHash } from "./modules/hash";
 export {
