@@ -45,7 +45,7 @@ import { gsap } from "gsap";
  *                      - style: The CSS-in-JS style object.
  *
  */
-export function cssInJSParseCSSText(cssText) {
+export function parseCSSText(cssText) {
   cssText = cssText || "";
   const cssTxt = cssText.replace(/\/\*(.|\s)*?\*\//g, " ").replace(/\s+/g, " ");
   const style = {},
@@ -71,7 +71,7 @@ export function cssInJSParseCSSText(cssText) {
  *                            the style properties and values identifying the style values.
  * @return {void}
  */
-export function cssInJSStyle(element, ...styles) {
+export function style(element, ...styles) {
   const prefixedStyles = prefix(Object.assign({}, ...styles));
   const finalStyles = cssifyObject(
     Object.keys(prefixedStyles).reduce((carry, currentCSSJSProp) => {
@@ -101,6 +101,6 @@ export function cssInJSStyle(element, ...styles) {
  *                                    https://gist.github.com/lunelson/7d83ca0c8bdfab170dd3
  *
  */
-export function cssInJSTransformStyle(element, ...transforms) {
+export function transform(element, ...transforms) {
   gsap.set(element, Object.assign({}, ...transforms));
 }
