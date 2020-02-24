@@ -175,3 +175,9 @@ export {
   arrayMax,
   arrayMin
 } from "./modules/array";
+export {
+  cssInJSParseCSSText,
+  cssInJSStyle,
+  cssInJSTransformStyle
+} from "./modules/css-in-js";
+export { fadeIn, fadeOut } from "./modules/animation";

@@ -708,7 +708,7 @@ function objectPropEqual(objA, objB, prop) {
  * when any key has values which are not strictly equal between the arguments.
  * Returns "true" when the values of all keys are strictly equal.
  *
- * @source https://stackoverflow.com/questions/22266826/how-can-i-do-a-shallow-comparison-of-the-properties-of-two-objects-with-javascri#answer-37636728
+ * @see https://stackoverflow.com/questions/22266826/how-can-i-do-a-shallow-comparison-of-the-properties-of-two-objects-with-javascri#answer-37636728
  *
  * @param {Object} objA First object.
  * @param {Object} objB Second object.

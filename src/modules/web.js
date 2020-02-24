@@ -597,7 +597,7 @@ export function getDecodedJSONFromFragmentURI(defaultData = null) {
 /**
  * Parses a multidimensional query string and returns an object with the parsed args.
  *
- * @source https://stackoverflow.com/questions/8648892/convert-url-parameters-to-a-javascript-object#answer-44713056
+ * @see https://stackoverflow.com/questions/8648892/convert-url-parameters-to-a-javascript-object#answer-44713056
  *
  * @param {string} str The query string.
  * @param {Object} [array] The base object to use (or a new object if omitted or falsy).
