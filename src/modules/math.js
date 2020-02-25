@@ -48,3 +48,13 @@ export function round(number, precision = 0) {
 export function sum(...numbers) {
   return numbers.reduce((carry, num) => carry + num);
 }
+
+/**
+ * Computes the mean of the given numbers.
+ *
+ * @param  {...any} numbers The numbers.
+ * @return {number} The mean.
+ */
+export function mean(...numbers) {
+  return sum(...numbers) / numbers.length;
+}

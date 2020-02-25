@@ -161,7 +161,7 @@ export {
   yieldAllSubsequences,
   yieldUniqueSubsequences
 } from "./modules/combinatorics";
-export { round, sum } from "./modules/math";
+export { round, sum, mean } from "./modules/math";
 export {
   unshiftArray,
   cloneArray,
