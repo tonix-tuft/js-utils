@@ -163,7 +163,12 @@ export function arrayFindReverse(array, fn) {
  *                            if the given array is empty.
  */
 export const arrayMax = array =>
-  array.reduce((carry, current) => (current > carry ? current : carry), void 0);
+  array.length
+    ? array.reduce(
+        (carry, current) => (current > carry ? current : carry),
+        -Infinity
+      )
+    : void 0;
 
 /**
  * Finds the minimum value of an array of numbers.
@@ -173,4 +178,9 @@ export const arrayMax = array =>
  *                            if the given array is empty.
  */
 export const arrayMin = array =>
-  array.reduce((carry, current) => (current < carry ? current : carry), void 0);
+  array.length
+    ? array.reduce(
+        (carry, current) => (current < carry ? current : carry),
+        +Infinity
+      )
+    : void 0;
