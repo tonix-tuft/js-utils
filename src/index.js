@@ -85,7 +85,8 @@ export {
   liftBinaryFn,
   juxt,
   converge,
-  execIfPOJOHas
+  execIfPOJOHas,
+  forGen
 } from "./modules/fn";
 export { stringHashArray, hashString, onePassStringHash } from "./modules/hash";
 export {
@@ -196,3 +197,4 @@ export {
   normalizeLat,
   normalizeLng
 } from "./modules/map-coordinates";
+export { xrange } from "./modules/iterator";

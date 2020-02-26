@@ -447,3 +447,22 @@ export const converge = (multiArgFn, fns) => (...params) =>
  */
 export const execIfPOJOHas = POJO => prop => fn =>
   Object.prototype.hasOwnProperty.call(POJO, prop) && fn(POJO[prop], POJO);
+
+/**
+ * Loops through the values of a generator and returns an array with its mapped
+ * values mapped with the given callback.
+ *
+ * @param {GeneratorFunction} gen A generator function.
+ * @return {(args: ...*) => (fn: (val: *) => *) => Array} A function which takes the arguments for the generator and returns
+ *                                                        another function which takes the callback to use to map each
+ *                                                        value of the generator returning an array with all the mapped values of the generator.
+ */
+export const forGen = gen => (...args) => fn => {
+  const generator = gen(...args);
+  const arr = [];
+  for (const value of generator) {
+    const res = fn(value);
+    arr.push(res);
+  }
+  return arr;
+};

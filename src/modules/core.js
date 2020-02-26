@@ -858,6 +858,7 @@ export const nestedMapSet = (map, keys, value) => {
 /**
  * Yields values of an array mapping the yielded value.
  *
+ * @generator
  * @param {Array} items An array of items.
  * @param {*} fn The function to call.
  *               The function will receive, in order the nth item,

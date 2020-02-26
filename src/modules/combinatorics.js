@@ -129,6 +129,7 @@ export const uniqueProgressiveIncrementalCombinations = items => {
 /**
  * Yields unique, progressive and incremental combinations.
  *
+ * @generator
  * @param {Array} items An array of items.
  * @param {boolean} yieldCopy True if some of the yielded combinations should be a copy (default)
  *                         of the corresponding internal array used during the generation of the current combination
@@ -178,6 +179,7 @@ export const yieldUniqueProgressiveIncrementalCombinations = function*(
 /**
  * Yields all the subsequences of the given array of items.
  *
+ * @generator
  * @param {Array} items An array of items to use to yield subsequences.
  * @yields {Array} The next subsequence.
  */
@@ -193,6 +195,7 @@ export const yieldAllSubsequences = function*(items) {
 /**
  * Yields only the unique subsequences of the given array of items.
  *
+ * @generator
  * @param {Array} items An array of items to use to yield subsequences.
  * @yields {Array} The next unique subsequence.
  */
