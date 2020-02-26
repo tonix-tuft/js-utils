@@ -53,3 +53,31 @@ export function median(...numbers) {
     ? sorted[middleIndex]
     : mean(sorted[middleIndex - 1], sorted[middleIndex]);
 }
+
+/**
+ * Computes the min deviation from a value.
+ *
+ * @param {number} value A value.
+ * @return {(...numbers: number[]) => number} A function receiving the numbers to use to compute the minimum deviation
+ *                                            from "value".
+ */
+export const minAbsDeviationFromValue = value => (...numbers) => {
+  let minAbsDeviation = Infinity;
+  numbers.map(num => {
+    const deviation = Math.abs(num - value);
+    if (deviation < minAbsDeviation) {
+      minAbsDeviation = deviation;
+    }
+  });
+  return minAbsDeviation;
+};
+
+/**
+ * Computes the min deviation from a value excluding that value from the numbers received.
+ *
+ * @param {number} value A value.
+ * @return {(...numbers: number[]) => number} A function receiving the numbers to use to compute the minimum deviation
+ *                                            from "value" exluding "value".
+ */
+export const minAbsDeviationFromExcludedValue = value => (...numbers) =>
+  minAbsDeviationFromValue(value)(...numbers.filter(num => num !== value));

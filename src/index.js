@@ -178,7 +178,12 @@ export {
 } from "./modules/array";
 export { parseCSSText, style, transform } from "./modules/css-in-js";
 export { fadeIn, fadeOut } from "./modules/animation";
-export { mean, median } from "./modules/stats";
+export {
+  mean,
+  median,
+  minAbsDeviationFromValue,
+  minAbsDeviationFromExcludedValue
+} from "./modules/stats";
 export {
   clampLat,
   wrapLng,
