@@ -64,23 +64,51 @@ export function parseCSSText(cssText) {
 }
 
 /**
+ * Returns a style POJO from the given styles with autoprefixing.
+ *
+ * @param {...Object} styles The styles defined as objects, with keys identifying
+ *                            the style properties and values identifying the style values.
+ *                            Subsequent style objects will override the style property value
+ *                            of the previous style object for the same key.
+ * @return {Object} A new POJO style object for the given styles.
+ */
+export function stylePOJO(...styles) {
+  const prefixedStyles = prefix(Object.assign({}, ...styles));
+  return Object.keys(prefixedStyles).reduce((carry, currentCSSJSProp) => {
+    carry[currentCSSJSProp] = isArray(prefixedStyles[currentCSSJSProp])
+      ? resolveArrayValue(currentCSSJSProp, prefixedStyles[currentCSSJSProp])
+      : prefixedStyles[currentCSSJSProp];
+    return carry;
+  }, {});
+}
+
+/**
+ * Returns an inline style string for the given styles with autoprefixing.
+ *
+ * @param {...Object} styles The styles defined as objects, with keys identifying
+ *                            the style properties and values identifying the style values.
+ *                            Subsequent style objects will override the style property value
+ *                            of the previous style object for the same key.
+ * @return {string} The style string.
+ */
+export function styleStr(...styles) {
+  const POJOStyles = stylePOJO(...styles);
+  const finalStyleStr = cssifyObject(POJOStyles);
+  return finalStyleStr;
+}
+
+/**
  * Adds inline styles to an element with autoprefixing.
  *
  * @param {Element} element The DOM element to style.
- * @param  {...Object} styles The styles defined as objects, with keys identifying
+ * @param {...Object} styles The styles defined as objects, with keys identifying
  *                            the style properties and values identifying the style values.
+ *                            Subsequent style objects will override the style property value
+ *                            of the previous style object for the same key.
  * @return {void}
  */
 export function style(element, ...styles) {
-  const prefixedStyles = prefix(Object.assign({}, ...styles));
-  const finalStyles = cssifyObject(
-    Object.keys(prefixedStyles).reduce((carry, currentCSSJSProp) => {
-      carry[currentCSSJSProp] = isArray(prefixedStyles[currentCSSJSProp])
-        ? resolveArrayValue(currentCSSJSProp, prefixedStyles[currentCSSJSProp])
-        : prefixedStyles[currentCSSJSProp];
-      return carry;
-    }, {})
-  );
+  const finalStyles = styleStr(...styles);
   element.style.cssText = `${
     element.style.cssText ? `${element.style.cssText} ` : ""
   } ${finalStyles}`;
@@ -92,7 +120,7 @@ export function style(element, ...styles) {
  * @see https://gist.github.com/lunelson/7d83ca0c8bdfab170dd3
  *
  * @param {Element} element The DOM element to style.
- * @param  {...Object} transforms The transforms defined as objects, with keys identifying
+ * @param {...Object} transforms The transforms defined as objects, with keys identifying
  *                                the transform property to apply and values identifying
  *                                the transform property value.
  *                                The transforms objects MUST have the properties
@@ -100,6 +128,8 @@ export function style(element, ...styles) {
  *
  *                                    https://gist.github.com/lunelson/7d83ca0c8bdfab170dd3
  *
+ *                                Subsequent transform objects will override the transform property value
+ *                                of the previous transform object for the same key.
  */
 export function transform(element, ...transforms) {
   gsap.set(element, Object.assign({}, ...transforms));

@@ -359,8 +359,8 @@ export const POJOCurry = (
 /**
  * A utility function which composes functions or higher order functions.
  *
- * @param  {...Function|...Function[]} fns A list of functions or higher order functions or arrays of functions
- *                                         (arrays will be flattened) to compose.
+ * @param {...Function|...Function[]} fns A list of functions or higher order functions or arrays of functions
+ *                                        (arrays will be flattened) to compose.
  * @return {Function|undefined} A function composed of all the functions or higher order functions
  *                              used for composition.
  *                              If no functions are given, "undefined" will be returned.
@@ -380,8 +380,8 @@ export const compose = (...fns) => (...args) => {
 /**
  * A utility function which pipes functions.
  *
- * @param  {...Function|...Function[]} fns A list of functions or arrays of functions (arrays will be flattened)
- *                                         to pipe.
+ * @param {...Function|...Function[]} fns A list of functions or arrays of functions (arrays will be flattened)
+ *                                        to pipe.
  * @return {Function} A function representing the pipe.
  *                    If not functions are given, "undefined" will be returned.
  */
