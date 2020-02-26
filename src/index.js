@@ -161,7 +161,7 @@ export {
   yieldAllSubsequences,
   yieldUniqueSubsequences
 } from "./modules/combinatorics";
-export { round, sum, mean } from "./modules/math";
+export { round, sum, intDiv, isEven, isOdd } from "./modules/math";
 export {
   unshiftArray,
   cloneArray,
@@ -173,7 +173,15 @@ export {
   firstOfArray,
   arrayFindReverse,
   arrayMax,
-  arrayMin
+  arrayMin,
+  sortNums
 } from "./modules/array";
 export { parseCSSText, style, transform } from "./modules/css-in-js";
 export { fadeIn, fadeOut } from "./modules/animation";
+export { mean, median } from "./modules/stats";
+export {
+  clampLat,
+  wrapLng,
+  normalizeLat,
+  normalizeLng
+} from "./modules/map-coordinates";

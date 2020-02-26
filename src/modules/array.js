@@ -184,3 +184,19 @@ export const arrayMin = array =>
         +Infinity
       )
     : void 0;
+
+/**
+ * Sorts an array of numbers returning a new array with the sorted
+ * numbers (does not mutate the original).
+ *
+ * @param {number[]} arrayOfNums An array of numbers.
+ * @param {boolean} [desc] True for descending order, false for ascending order (default).
+ * @return {number[]} A new array with the sorted numbers.
+ */
+export const sortNums = (arrayOfNums, desc = false) =>
+  [...arrayOfNums].sort((a, b) =>
+    !desc // asc
+      ? a - b
+      : // desc
+        b - a
+  );
