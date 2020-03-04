@@ -97,11 +97,13 @@ let uniqueIdCounter = 0;
 /**
  * Generates a unique ID which can be used as an "id" attribute.
  *
+ * @param {string|undefined} [uniqueIdPrefix] Local unique ID prefix which overrides the prefix
+ *                                            set on the "config" configuration object.
  * @return {string} The unique ID.
  */
-export function uniqueId() {
+export function uniqueId(uniqueIdPrefix = void 0) {
   uniqueIdCounter++;
-  const uniqueId = config.uniqueIdPrefix + uniqueIdCounter;
+  const uniqueId = (uniqueIdPrefix || config.uniqueIdPrefix) + uniqueIdCounter;
   return uniqueId;
 }
 

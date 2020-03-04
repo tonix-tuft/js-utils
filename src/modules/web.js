@@ -313,11 +313,16 @@ export function hasHorizontalScrollbar(elem) {
 /**
  * Generates a unique ID which can be used for an element.
  *
+ * @param {string|undefined} [elementUniqueIdPrefix] Local unique ID prefix which overrides the prefix
+ *                                                   set on the "config" configuration object.
  * @return {string} The element unique ID.
  */
-export function elementUniqueId() {
+export function elementUniqueId(elementUniqueIdPrefix = void 0) {
   const uniqueElementIdSuffix = uniqueId();
-  return config.elementUniqueIdPrefix + uniqueElementIdSuffix;
+  return (
+    (elementUniqueIdPrefix || config.elementUniqueIdPrefix) +
+    uniqueElementIdSuffix
+  );
 }
 
 /**
