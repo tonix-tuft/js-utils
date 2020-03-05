@@ -86,6 +86,7 @@ export {
   juxt,
   converge,
   execIfPOJOHas,
+  execWithExistentProps,
   forGen
 } from "./modules/fn";
 export { stringHashArray, hashString, onePassStringHash } from "./modules/hash";

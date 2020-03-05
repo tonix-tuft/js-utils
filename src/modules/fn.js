@@ -449,6 +449,17 @@ export const execIfPOJOHas = POJO => prop => fn =>
   Object.prototype.hasOwnProperty.call(POJO, prop) && fn(POJO[prop], POJO);
 
 /**
+ * Executes a callback with the existent properties of an object.
+ *
+ * @param {...string|...number} props The properties to check for existence.
+ * @return {(o: Object) => (fn: (existentProps: string[]|number[]) => *) => *} A function which receives the POJO object for which to check for the given properties
+ *                                                                             and returns a function receiving a callback which will receive the existent properties
+ *                                                                             of the object as parameter.
+ */
+export const execWithExistentProps = (...props) => o => fn =>
+  fn(props.filter(prop => Object.prototype.hasOwnProperty.call(o, prop)));
+
+/**
  * Loops through the values of a generator and returns an array with its mapped
  * values mapped with the given callback.
  *
