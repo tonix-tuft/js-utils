@@ -35,7 +35,7 @@ import { millisecToSec } from "./time";
  *
  * @param {Element|Element[]} node DOM element or array of DOM elements.
  * @param {Object} options Options.
- * @return void
+ * @return {undefined}
  */
 export function fadeIn(node, options) {
   const opt = options || {};
@@ -64,7 +64,7 @@ export function fadeIn(node, options) {
  *
  * @param {Element|Element[]} node DOM element or array of DOM elements.
  * @param {Object} options Options.
- * @return void
+ * @return {undefined}
  */
 export function fadeOut(node, options) {
   const opt = options || {};

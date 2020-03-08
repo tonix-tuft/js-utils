@@ -79,19 +79,6 @@ export function arraySliceFromValueToValue(arr, from, to) {
 }
 
 /**
- * Tests to see whether something is an array.
- *
- * @param {*} something A variable to check wether it is an array.
- * @return {boolean} True if the passed in parameter is an array, false otherwise.
- */
-export function isArray(something) {
-  return (
-    Object.prototype.toString.call(something) ===
-    Object.prototype.toString.call([])
-  );
-}
-
-/**
  * Tests whether all the elements of an array are coercible to a number or not.
  *
  * @param {Array} array An array.

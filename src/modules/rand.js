@@ -49,7 +49,7 @@ export function randomStr(length) {
  *
  * @param {number} min Min int value.
  * @param {number} max Max int value.
- * @return A random int between min and max.
+ * @return {number} A random int between min and max.
  */
 export function randomInt(min = 0, max = Number.MAX_SAFE_INTEGER) {
   min = Math.ceil(min);

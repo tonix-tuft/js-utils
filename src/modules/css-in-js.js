@@ -29,7 +29,7 @@
 
 import { prefix } from "inline-style-prefixer";
 import { cssifyObject, resolveArrayValue } from "css-in-js-utils";
-import { isArray } from "./array";
+import { isArray } from "./core";
 import { gsap } from "gsap";
 
 /**

@@ -27,8 +27,7 @@
  * Promise-related utility functions.
  */
 
-import { uniqueId } from "./core";
-import { isArray } from "./array";
+import { uniqueId, isArray } from "./core";
 
 /**
  * Creates a new timeout promise which will resolve after the given milliseconds timeout.

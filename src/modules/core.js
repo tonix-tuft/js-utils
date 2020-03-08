@@ -69,6 +69,29 @@ export const isObject = function(obj) {
 };
 
 /**
+ * Tests to see whether something is an array or not.
+ *
+ * @param {*} something A variable to check whether it is an array or not.
+ * @return {boolean} True if the parameter passed in is an array, false otherwise.
+ */
+export function isArray(something) {
+  return (
+    Object.prototype.toString.call(something) ===
+    Object.prototype.toString.call([])
+  );
+}
+
+/**
+ * Tests if the given value is callable.
+ *
+ * @param {*} v The value.
+ * @return {boolean} True if callable, false otherwise.
+ */
+export function isCallable(v) {
+  return typeof v === "function";
+}
+
+/**
  * Tests if a variable is empty returning true for empty strings and empty arrays.
  *
  * @param {*} data The variable to test.
@@ -105,6 +128,262 @@ export function uniqueId(uniqueIdPrefix = void 0) {
   uniqueIdCounter++;
   const uniqueId = (uniqueIdPrefix || config.uniqueIdPrefix) + uniqueIdCounter;
   return uniqueId;
+}
+
+/**
+ * Gets a nested value of an object given an array of nested property names (keys).
+ *
+ * @param {Object} data JS POJO object.
+ * @param {Array} props Array of object nested keys.
+ * @return {*} The leaf value.
+ */
+export function nestedPropertyValue(data, props) {
+  let root = data;
+  for (let i = 0; i < props.length; i++) {
+    const prop = props[i];
+    root = root[prop];
+  }
+  return root;
+}
+
+/**
+ * Alias for "nestedPropertyValue".
+ *
+ * @alias
+ */
+export const getNestedPropertyValue = nestedPropertyValue;
+
+/**
+ * Checks if a nested value of an object given an array of nested property names (keys) exists.
+ *
+ * @param {Object} data JS POJO object.
+ * @param {Array} props Array of object nested keys.
+ * @return {boolean} True if the nested key exists, false otherwise.
+ */
+export function hasNestedPropertyValue(data, props) {
+  if (!props.length) {
+    return false;
+  }
+  let root = data;
+  for (let i = 0; i < props.length; i++) {
+    const prop = props[i];
+    if (!root[prop]) {
+      return false;
+    }
+    root = root[prop];
+  }
+  return true;
+}
+
+/**
+ * Sets a nested value of an object given an array of nested property names (keys).
+ *
+ * @param {Object} data JS POJO object.
+ * @param {Array} props Array of object nested keys.
+ * @param {*} value Leaf value.
+ * @return {undefined}
+ */
+export function setNestedPropertyValue(data, props, value) {
+  if (!props.length) {
+    return;
+  }
+  let root = data;
+  let prev = null;
+  for (let i = 0; i < props.length; i++) {
+    const prop = props[i];
+    if (typeof root[prop] !== "object") {
+      root[prop] = {};
+    }
+    prev = root;
+    root = root[prop];
+  }
+  if (prev) {
+    prev[props[props.length - 1]] = value;
+  }
+}
+
+/**
+ * Sets a nested value on a nested map.
+ *
+ * @param {Map|WeakMap} map A map or weak map.
+ * @param {Array} keys Array of keys to traverse. Each key will lead to a nested map.
+ * @param {*} value The value to set at the inner key.
+ * @return {undefined}
+ */
+export const nestedMapSet = (map, keys, value) => {
+  let i = 0;
+  let current = map;
+  while (i < keys.length - 1) {
+    const key = keys[i];
+    const nested = current.get(key);
+    if (nested instanceof Map || nested instanceof WeakMap) {
+      current = nested;
+    } else {
+      const newMap = new Map();
+      current.set(key, newMap);
+      current = newMap;
+    }
+    i++;
+  }
+  current.set(keys[i], value);
+};
+
+/**
+ * Tests if a map has the given nested keys.
+ *
+ * @param {Map|WeakMap} map A map or weak map.
+ * @param {Array} keys Array of keys to check. Each key represents a nested map.
+ * @return {boolean} "true" if all the nested keys exist, false otherwise.
+ */
+export const nestedMapHas = (map, keys) => {
+  let current = map;
+  let i = 0;
+  const l = keys.length;
+  while (
+    (current instanceof Map || current instanceof WeakMap) &&
+    current.has(keys[i]) &&
+    i < l
+  ) {
+    current = current.get(keys[i]);
+    i++;
+  }
+  return i == l;
+};
+
+/**
+ * Gets a value from a nested map.
+ *
+ * @param {Map|WeakMap} map A map or weak map.
+ * @param {Array} keys Array of keys. Each key represents a nested map.
+ * @return {*} The value of the map or "undefined" if there is no value for the given nested keys.
+ */
+export const nestedMapGet = (map, keys) => {
+  let current = map;
+  let i = 0;
+  const l = keys.length;
+  while (
+    (current instanceof Map || current instanceof WeakMap) &&
+    current.has(keys[i]) &&
+    i < l
+  ) {
+    current = current.get(keys[i]);
+    i++;
+  }
+  return i == l ? current : void 0;
+};
+
+/**
+ * @type {Symbol}
+ */
+const treeMapSubtree = Symbol("treeMapSubtree");
+
+/**
+ * Sets a nested value on a nested tree map.
+ *
+ * @param {Map|WeakMap} rootMap A map or weak map to use as the root.
+ * @param {Array} keys Array of keys to traverse. Each key will lead to a nested node of the tree map.
+ * @param {*} value The value to set at the inner nested key.
+ * @return {undefined}
+ */
+export const nestedTreeMapSet = (rootMap, keys, value) => {
+  let i = 0;
+  let current = rootMap;
+  const MapConstructor = rootMap instanceof WeakMap ? WeakMap : Map;
+  while (i < keys.length - 1) {
+    const key = keys[i];
+    const nested = current.get(key);
+    if (nested) {
+      current =
+        nested[treeMapSubtree] ||
+        (nested[treeMapSubtree] = new MapConstructor());
+    } else {
+      const newMap = new MapConstructor();
+      const node = {
+        [treeMapSubtree]: newMap,
+        value: void 0
+      };
+      current.set(key, node);
+      current = newMap;
+    }
+    i++;
+  }
+  const key = keys[i];
+  !current.has(key)
+    ? current.set(key, {
+        value
+      })
+    : (current.get(key).value = value);
+};
+
+/**
+ * Tests if a tree map has the given nested keys.
+ *
+ * @param {Map|WeakMap} rootMap The root of the map or weak map.
+ * @param {Array} keys Array of keys to check. Each key represents a nested node of the tree map.
+ * @return {boolean} "true" if all the nested keys exist, false otherwise.
+ */
+export const nestedTreeMapHas = (rootMap, keys) => {
+  let current = rootMap;
+  let i = 0;
+  const l = keys.length;
+  while (
+    (current instanceof Map || current instanceof WeakMap) &&
+    current.has(keys[i]) &&
+    i < l
+  ) {
+    current = current.get(keys[i])[treeMapSubtree];
+    i++;
+  }
+  return i == l;
+};
+
+/**
+ * Gets a value from a nested tree map.
+ *
+ * @param {Map|WeakMap} rootMap The root of the map or weak map.
+ * @param {Array} keys Array of keys. Each key represents a nested node of the tree map.
+ * @return {*} The value of the tree map or "undefined" if there is no value for the given nested keys.
+ */
+export const nestedTreeMapGet = (rootMap, keys) => {
+  let current = rootMap;
+  let i = 0;
+  const lastIndex = keys.length - 1;
+  while (
+    (current instanceof Map || current instanceof WeakMap) &&
+    current.has(keys[i]) &&
+    i < lastIndex
+  ) {
+    current = current.get(keys[i])[treeMapSubtree];
+    i++;
+  }
+  if (i === lastIndex && current) {
+    const lastKey = keys[i];
+    if (current.has(lastKey)) {
+      const nested = current.get(lastKey);
+      return nested.value;
+    }
+  }
+  return void 0;
+};
+
+/**
+ * Yields values of an array mapping the yielded value.
+ *
+ * @generator
+ * @param {Array} items An array of items.
+ * @param {*} fn The function to call.
+ *               The function will receive, in order the nth item,
+ *               the index of the item in the array of items and the whole items array
+ *               as parameters.
+ * @param {*} thisArg Optional this arg of the called function (defaults to undefined).
+ * @yields {*} The next yielded mapped item.
+ */
+export function* mapYield(items, fn, thisArg = void 0) {
+  items.map();
+  const boundFn = fn.bind(thisArg);
+  for (let i = 0; i < items.length; i++) {
+    yield boundFn(items[i], i, items);
+  }
 }
 
 /**
@@ -426,13 +705,165 @@ export function deepObjectCloningExtend(...args) {
  *
  * @param {Object} destinationObj The destination object.
  * @param {...Object} sourceObjects The source objects.
- * @return Object The destination object "destinationObj" given as parameter after extension.
+ * @return {Object} The destination object "destinationObj" given as parameter after extension.
  */
 export function extend(destinationObj, ...sourceObjects) {
   for (const sourceObject of sourceObjects) {
     deepObjectExtend(destinationObj, sourceObject);
   }
   return destinationObj;
+}
+
+/**
+ * Extends a destination object with the provided source objects.
+ *
+ * @param {Object} destinationObject The destination object.
+ * @param {...*} rest The source objects with the last parameter being an array of rules,
+ *                    each rule being a tuple array where the first element is an array of "ORed" property names (strings or numbers),
+ *                    symbols or regexes matching property names for which the corresponding values should be decorated
+ *                    (or a single property name, symbol or regex matching a property name if the decoration should only happen on a single property),
+ *                    and where the second element is a callback to execute for each value which is a value of a property
+ *                    of a source object.
+ *                    The callback has the following signature:
+ *
+ *                        (value: *, prop: string|number, parent: Object) => *|undefined
+ *
+ *                    The callback will receive the final value after extension, its associated property and the parent object
+ *                    where that property is set with that value.
+ *                    Its returned value will be used as the final value of the property for that object in "destinationObject".
+ * @return {Object} The destination object "destinationObj" given as parameter after extension and, if the callback is given
+ *                  as the last parameter, after applying the given callback.
+ */
+export function extendDecorate(destinationObject, ...rest) {
+  const rules = rest[rest.length - 1];
+  rest.pop();
+  if (isArray(rules)) {
+    const toString = Object.prototype.toString,
+      objectToStringStr = toString.call({});
+    const sourceObjects = rest;
+    const initialRetValue = {};
+    const matchedRulesMap = new Map();
+    const callbacksMap = new Map();
+    const paths = [];
+    const mapKeys = (
+      destinationObject,
+      sourceObject,
+      currentStack,
+      currentPath
+    ) => {
+      const keys = Reflect.ownKeys(sourceObject);
+      for (const key of keys) {
+        currentStack.push({
+          destinationObject,
+          sourceObject,
+          property: key,
+          path: [...currentPath, key]
+        });
+      }
+    };
+    const matchRule = (rule, property) => {
+      if (rule instanceof RegExp && typeof property === "string") {
+        return property.match(rule);
+      } else {
+        return rule === property;
+      }
+    };
+    const matchArrayRule = (arrayRule, property) => {
+      for (const rule of arrayRule) {
+        if (matchRule(rule, property)) {
+          return true;
+        }
+      }
+      return false;
+    };
+    const ruleMatches = (rule, property) => {
+      if (isArray(rule)) {
+        return matchArrayRule(rule, property);
+      } else {
+        return matchRule(rule, property);
+      }
+    };
+    const matchRules = property => {
+      if (!matchedRulesMap.has(property)) {
+        const callbacks = [];
+        for (const [rule, callback] of rules) {
+          if (ruleMatches(rule, property)) {
+            callbacks.push(callback);
+          }
+        }
+        matchedRulesMap.set(property, callbacks);
+      }
+      return matchedRulesMap.get(property);
+    };
+
+    for (const sourceObject of sourceObjects) {
+      const currentStack = [];
+      const currentPath = [];
+      mapKeys(destinationObject, sourceObject, currentStack, currentPath);
+      while (currentStack.length) {
+        const {
+          destinationObject,
+          sourceObject,
+          property,
+          path: currentPath
+        } = currentStack.pop();
+        if (
+          sourceObject[property] &&
+          objectToStringStr === toString.call(sourceObject[property])
+        ) {
+          // "sourceObject[property]" is an object.
+          destinationObject[property] =
+            objectToStringStr === toString.call(destinationObject[property])
+              ? destinationObject[property]
+              : {};
+          mapKeys(
+            destinationObject[property],
+            sourceObject[property],
+            currentStack,
+            currentPath
+          );
+        } else {
+          // "sourceObject[property]" is not an object.
+          destinationObject[property] = sourceObject[property];
+        }
+        const callbacks = matchRules(property);
+        if (callbacks && callbacks.length) {
+          if (!nestedTreeMapHas(callbacksMap, currentPath)) {
+            paths.push([...currentPath]);
+          }
+          nestedTreeMapSet(
+            callbacksMap,
+            currentPath,
+            callbacks.map(callback => retValue => {
+              const value =
+                retValue === initialRetValue
+                  ? destinationObject[property]
+                  : retValue;
+              return callback(value, property, destinationObject);
+            })
+          );
+        }
+      }
+    }
+
+    // Decorating the final nested values.
+    for (let i = paths.length - 1; i >= 0; i--) {
+      const path = paths[i];
+      const callbacks = nestedTreeMapGet(callbacksMap, path) || [];
+      let retValue = initialRetValue;
+      for (const callback of callbacks) {
+        retValue = callback(retValue);
+      }
+      if (retValue !== initialRetValue) {
+        setNestedPropertyValue(destinationObject, path, retValue);
+      }
+    }
+
+    return destinationObject;
+  } else {
+    rest.push(rules);
+    return extend(destinationObject, ...rest);
+  }
 }
 
 /**
@@ -449,71 +880,6 @@ export function includesTypeCoercion(array, value) {
     }
   }
   return false;
-}
-
-/**
- * Gets a nested value of an object given an array of nested property names (keys).
- *
- * @param {Object} data JS POJO object.
- * @param {Array} props Array of object nested keys.
- * @return {*} The leaf value.
- */
-export function nestedPropertyValue(data, props) {
-  let root = data;
-  for (let i = 0; i < props.length; i++) {
-    const prop = props[i];
-    root = root[prop];
-  }
-  return root;
-}
-
-/**
- * Checks if a nested value of an object given an array of nested property names (keys) exists.
- *
- * @param {Object} data JS POJO object.
- * @param {Array} props Array of object nested keys.
- * @return {boolean} True if the nested key exists, false otherwise.
- */
-export function hasNestedPropertyValue(data, props) {
-  if (!props.length) {
-    return false;
-  }
-  let root = data;
-  for (let i = 0; i < props.length; i++) {
-    const prop = props[i];
-    if (!root[prop]) {
-      return false;
-    }
-    root = root[prop];
-  }
-  return true;
-}
-
-/**
- * Sets a nested value of an object given an array of nested property names (keys).
- *
- * @param {Object} data JS POJO object.
- * @param {Array} props Array of object nested keys.
- * @param {*} value Leaf value.
- * @return {undefined}
- */
-export function setNestedPropertyValue(data, props, value) {
-  if (!props.length) {
-    return;
-  }
-  let root = data;
-  let prev = null;
-  for (let i = 0; i < props.length; i++) {
-    const prop = props[i];
-    if (typeof root[prop] !== "object") {
-      root[prop] = {};
-    }
-    prev = root;
-    root = root[prop];
-  }
-  if (prev) {
-    prev[props[props.length - 1]] = value;
-  }
 }
 
 /**
@@ -554,16 +920,6 @@ export function ctypeDigit(a) {
  */
 export function isIntegerOrIntegerStr(a) {
   return Number.isInteger(a) || ctypeDigit(a);
-}
-
-/**
- * Tests if the given value is callable.
- *
- * @param {*} v The value.
- * @return {boolean} True if callable, false otherwise.
- */
-export function isCallable(v) {
-  return typeof v === "function";
 }
 
 /**
@@ -650,7 +1006,7 @@ export function isJSONString(str) {
 /**
  * No-op function.
  *
- * @return void
+ * @return {undefined}
  */
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 export function noOpFn() {}
@@ -809,72 +1165,6 @@ export function shallowObjectDiff(objA, objB) {
     }
   }
   return diff;
-}
-
-/**
- * Tests if a map has the given nested keys.
- *
- * @param {Map|WeakMap} map A map or weak map.
- * @param {Array} keys Array of keys to check. Each key represents a nested map.
- * @return {boolean} "true" if all the nested keys exist, false otherwise.
- */
-export const nestedMapHas = (map, keys) => {
-  let current = map;
-  let i = 0;
-  while (
-    (current instanceof Map || current instanceof WeakMap) &&
-    current.has(keys[i])
-  ) {
-    current = current.get(keys[i]);
-    i++;
-  }
-  return i == keys.length;
-};
-
-/**
- * Sets a nested value on a nested map.
- *
- * @param {Map|WeakMap} map A map or weak map.
- * @param {Array} keys Array of keys to traverse. Each key will lead to a nested map.
- * @param {*} value The value to set at the inner key.
- * @return {undefined}
- */
-export const nestedMapSet = (map, keys, value) => {
-  let i = 0;
-  let current = map;
-  while (i < keys.length - 1) {
-    const key = keys[i];
-    const nested = current.get(key);
-    if (nested instanceof Map || nested instanceof WeakMap) {
-      current = nested;
-    } else {
-      const newMap = new Map();
-      current.set(key, newMap);
-      current = newMap;
-    }
-    i++;
-  }
-  current.set(keys[i], value);
-};
-
-/**
- * Yields values of an array mapping the yielded value.
- *
- * @generator
- * @param {Array} items An array of items.
- * @param {*} fn The function to call.
- *               The function will receive, in order the nth item,
- *               the index of the item in the array of items and the whole items array
- *               as parameters.
- * @param {*} thisArg Optional this arg of the called function (defaults to undefined).
- * @yields {*} The next yielded mapped item.
- */
-export function* mapYield(items, fn, thisArg = void 0) {
-  items.map();
-  const boundFn = fn.bind(thisArg);
-  for (let i = 0; i < items.length; i++) {
-    yield boundFn(items[i], i, items);
-  }
 }
 
 /**

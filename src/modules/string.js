@@ -1,5 +1,3 @@
-import { isArray } from "./array";
-
 /*
  * Copyright (c) 2020 Anton Bagdatyev (Tonix-Tuft)
  *
@@ -28,6 +26,8 @@ import { isArray } from "./array";
 /**
  * Utility functions for working with strings.
  */
+
+import { isArray } from "./core";
 
 /**
  * Escapes special characters for a JS regex.
@@ -144,14 +144,14 @@ export function trimRight(str, characterMask) {
  *
  * E.g.:
  *
- *      concatWithInnerOuterSeparators(["a", "value", ["with", "nested", "value"], "etc"], " # ", " $ ")
- *      // Returns:
- *      "a # value # with $ nested $ value # etc"
+ *     concatWithInnerOuterSeparators(["a", "value", ["with", "nested", "value"], "etc"], " # ", " $ ")
+ *     // Returns:
+ *     "a # value # with $ nested $ value # etc"
  *
  * @param {Array<string>|Array<Array<string>>} arrayToConcat An array of strings or arrays or strings.
  * @param {string} outerSeparator Outer separator.
  * @param {string} innerSeparator Inner separator.
- * @return string The concatenated string.
+ * @return {string} The concatenated string.
  */
 export function concatWithInnerOuterSeparators(
   arrayToConcat,
