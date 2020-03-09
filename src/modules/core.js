@@ -740,6 +740,7 @@ export function extendDecorate(destinationObject, ...rest) {
   if (isArray(rules)) {
     const toString = Object.prototype.toString,
       objectToStringStr = toString.call({});
+    const objectConstructorName = {}.constructor.name;
     const sourceObjects = rest;
     const initialRetValue = {};
     const matchedRulesMap = new Map();
@@ -809,9 +810,11 @@ export function extendDecorate(destinationObject, ...rest) {
         } = currentStack.pop();
         if (
           sourceObject[property] &&
-          objectToStringStr === toString.call(sourceObject[property])
+          objectToStringStr === toString.call(sourceObject[property]) &&
+          sourceObject[property].constructor &&
+          objectConstructorName === sourceObject[property].constructor.name
         ) {
-          // "sourceObject[property]" is an object.
+          // "sourceObject[property]" is an object of class "Object".
           destinationObject[property] =
             objectToStringStr === toString.call(destinationObject[property])
               ? destinationObject[property]
