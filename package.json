@@ -58,9 +58,5 @@
     "dist",
     "src"
   ],
-  "dependencies": {
-    "css-in-js-utils": "^3.0.4",
-    "gsap": "^3.2.4",
-    "inline-style-prefixer": "^5.1.2"
-  }
+  "dependencies": {}
 }
