@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Anton Bagdatyev (Tonix-Tuft)
+ * Copyright (c) 2020 Anton Bagdatyev (Tonix)
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -184,14 +184,6 @@ export {
   arrayMin,
   sortNums
 } from "./modules/array";
-export {
-  parseCSSText,
-  stylePOJO,
-  styleStr,
-  style,
-  transform
-} from "./modules/css-in-js";
-export { fadeIn, fadeOut } from "./modules/animation";
 export {
   mean,
   median,
