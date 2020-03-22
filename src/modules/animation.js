@@ -27,8 +27,8 @@
  * Animation utility functions.
  */
 
-import { gsap } from "gsap";
 import { millisecToSec } from "./time";
+import getGSAP from "../externals/gsap";
 
 /**
  * Fade in animation.
@@ -41,6 +41,7 @@ export function fadeIn(node, options) {
   const opt = options || {};
   const secs = millisecToSec(opt.millisec || 300);
   const css = opt.css || {};
+  const gsap = getGSAP();
   gsap.fromTo(
     node,
     secs,
@@ -70,6 +71,7 @@ export function fadeOut(node, options) {
   const opt = options || {};
   const secs = millisecToSec(opt.millisec || 300);
   const css = opt.css || {};
+  const gsap = getGSAP();
   gsap.fromTo(
     node,
     secs,

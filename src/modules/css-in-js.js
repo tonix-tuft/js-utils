@@ -30,7 +30,7 @@
 import { prefix } from "inline-style-prefixer";
 import { cssifyObject, resolveArrayValue } from "css-in-js-utils";
 import { isArray } from "./core";
-import { gsap } from "gsap";
+import getGSAP from "../externals/gsap";
 
 /**
  * Parses CSS text and converts it to a CSS-in-JS object.
@@ -132,5 +132,6 @@ export function style(element, ...styles) {
  *                                of the previous transform object for the same key.
  */
 export function transform(element, ...transforms) {
+  const gsap = getGSAP();
   gsap.set(element, Object.assign({}, ...transforms));
 }
