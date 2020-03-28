@@ -68,6 +68,7 @@ export {
   noOpFn,
   is,
   shallowEqual,
+  objectPropEqual,
   partialShallowEqual,
   shallowObjectDiff,
   nestedMapSet,
