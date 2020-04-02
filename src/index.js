@@ -95,7 +95,9 @@ export {
   converge,
   execIfPOJOHas,
   execWithExistentProps,
-  forGen
+  forGen,
+  flatten,
+  cartesianProduct
 } from "./modules/fn";
 export { stringHashArray, hashString, onePassStringHash } from "./modules/hash";
 export {

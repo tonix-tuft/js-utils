@@ -477,3 +477,22 @@ export const forGen = gen => (...args) => fn => {
   }
   return arr;
 };
+
+/**
+ * Flattens an array (its first dimension, at most).
+ *
+ * @param {Array} arr An array.
+ * @return {Array} A new flattened array.
+ */
+export const flatten = arr => Array.prototype.concat.apply([], arr);
+
+/**
+ * Computes the cartesian product of the given sets.
+ *
+ * @param  {...Array} sets The sets to use to compute the cartesian product.
+ * @return {Array} The cartesian product of the given sets.
+ */
+export const cartesianProduct = (...sets) =>
+  sets.reduce((acc, set) => flatten(acc.map(x => set.map(y => [...x, y]))), [
+    []
+  ]);
