@@ -80,7 +80,7 @@ export {
   mapYield,
   str,
   mapObject,
-  propSelection
+  propSelection,
 } from "./modules/core";
 export {
   _,
@@ -97,7 +97,7 @@ export {
   execWithExistentProps,
   forGen,
   flatten,
-  cartesianProduct
+  cartesianProduct,
 } from "./modules/fn";
 export { stringHashArray, hashString, onePassStringHash } from "./modules/hash";
 export {
@@ -105,7 +105,7 @@ export {
   minDelayPromise,
   maxDelayFallbackPromise,
   applyAsync,
-  composeAsync
+  composeAsync,
 } from "./modules/promise";
 export {
   buildQueryString,
@@ -135,13 +135,13 @@ export {
   appendEncodedJSONFragmentToURI,
   getDecodedJSONFromFragmentURI,
   getQueryStringArgsMultiDim,
-  cursorFocus
+  cursorFocus,
 } from "./modules/web";
 export {
   randomInt,
   randomStr,
   randomDifferentFromValue,
-  randomArrayShuffle
+  randomArrayShuffle,
 } from "./modules/rand";
 export { time, msToTime, millisecToSec } from "./modules/time";
 export {
@@ -153,7 +153,8 @@ export {
   trimRight,
   concatWithInnerOuterSeparators,
   optionsValueLabel,
-  startsWith
+  startsWith,
+  ucaseFirst,
 } from "./modules/string";
 export { googleMapBestZoomLevelFromBounds } from "./modules/google";
 export { delay, debounce, throttle } from "./modules/callback";
@@ -163,7 +164,7 @@ export {
   turnNthBitOff,
   turnNthBitOn,
   toggleNthBit,
-  checkNthBitOn
+  checkNthBitOn,
 } from "./modules/bitwise";
 export { getLuminance } from "./modules/color";
 export {
@@ -171,7 +172,7 @@ export {
   uniqueProgressiveIncrementalCombinations,
   yieldUniqueProgressiveIncrementalCombinations,
   yieldAllSubsequences,
-  yieldUniqueSubsequences
+  yieldUniqueSubsequences,
 } from "./modules/combinatorics";
 export { round, sum, intDiv, isEven, isOdd } from "./modules/math";
 export {
@@ -185,18 +186,18 @@ export {
   arrayFindReverse,
   arrayMax,
   arrayMin,
-  sortNums
+  sortNums,
 } from "./modules/array";
 export {
   mean,
   median,
   minAbsDeviationFromValue,
-  minAbsDeviationFromExcludedValue
+  minAbsDeviationFromExcludedValue,
 } from "./modules/stats";
 export {
   clampLat,
   wrapLng,
   normalizeLat,
-  normalizeLng
+  normalizeLng,
 } from "./modules/map-coordinates";
 export { xrange } from "./modules/iterator";

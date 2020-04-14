@@ -120,7 +120,7 @@ export function trim(str, characterMask) {
 export function trimLeft(str, characterMask) {
   return trimCharacterMask(str, characterMask, {
     shouldTrimLeft: true,
-    shouldTrimRight: false
+    shouldTrimRight: false,
   });
 }
 
@@ -134,7 +134,7 @@ export function trimLeft(str, characterMask) {
 export function trimRight(str, characterMask) {
   return trimCharacterMask(str, characterMask, {
     shouldTrimLeft: false,
-    shouldTrimRight: true
+    shouldTrimRight: true,
   });
 }
 
@@ -197,7 +197,7 @@ export function optionsValueLabel({
   concatObjectProps,
   valueProp = "id",
   outerSeparator = " ",
-  innerSeparator = " "
+  innerSeparator = " ",
 }) {
   const options = [];
   for (const obj of arrayOfObjects) {
@@ -217,7 +217,7 @@ export function optionsValueLabel({
         arrayToConcat,
         outerSeparator,
         innerSeparator
-      )
+      ),
     };
   }
   return options;
@@ -232,4 +232,14 @@ export function optionsValueLabel({
  */
 export function startsWith(haystack, needle) {
   return haystack.indexOf(needle, 0) === 0;
+}
+
+/**
+ * Makes the first character of the given string uppercase.
+ *
+ * @param {string} string A string.
+ * @return {string} The string with its first character made uppercase.
+ */
+export function ucaseFirst(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
 }
