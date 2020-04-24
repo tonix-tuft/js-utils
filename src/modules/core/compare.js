@@ -55,8 +55,8 @@ export function objectPropEqual(objA, objB, prop) {
  *
  * @see https://stackoverflow.com/questions/22266826/how-can-i-do-a-shallow-comparison-of-the-properties-of-two-objects-with-javascri#answer-37636728
  *
- * @param {Object} objA First object.
- * @param {Object} objB Second object.
+ * @param {*} objA First object.
+ * @param {*} objB Second object.
  * @return {boolean}
  */
 export function shallowEqual(objA, objB) {
