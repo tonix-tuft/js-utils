@@ -38,7 +38,7 @@ export { shallowEqual, objectPropEqual, is };
 export const config = {
   uniqueIdPrefix: "",
   elementUniqueIdPrefix: "",
-  checkNetworkURI: null
+  checkNetworkURI: null,
 };
 
 /**
@@ -67,7 +67,7 @@ const objPrototypeToString = Object.prototype.toString.call({});
  * @param {*} obj The variable to test.
  * @return {boolean} "true" if "obj" is indeed an object, "false" otherwise.
  */
-export const isObject = function(obj) {
+export const isObject = function (obj) {
   return objPrototypeToString === Object.prototype.toString.call(obj);
 };
 
@@ -116,9 +116,9 @@ export function isEmptyOr0(data) {
 }
 
 /**
- * @type {number}
+ * @type {string}
  */
-let uniqueIdCounter = 0;
+const JSUtlUniqueIdCounterProp = "JSUtlUniqueIdCounterLEzKKl87QCDxwVH";
 
 /**
  * Generates a unique ID which can be used as an "id" attribute.
@@ -128,7 +128,9 @@ let uniqueIdCounter = 0;
  * @return {string} The unique ID.
  */
 export function uniqueId(uniqueIdPrefix = void 0) {
-  uniqueIdCounter++;
+  window[JSUtlUniqueIdCounterProp] = window[JSUtlUniqueIdCounterProp] || 0;
+  window[JSUtlUniqueIdCounterProp]++;
+  const uniqueIdCounter = window[JSUtlUniqueIdCounterProp];
   const uniqueId = (uniqueIdPrefix || config.uniqueIdPrefix) + uniqueIdCounter;
   return uniqueId;
 }
@@ -303,7 +305,7 @@ export const nestedTreeMapSet = (rootMap, keys, value) => {
       const newMap = new MapConstructor();
       const node = {
         [treeMapSubtree]: newMap,
-        value: void 0
+        value: void 0,
       };
       current.set(key, node);
       current = newMap;
@@ -313,7 +315,7 @@ export const nestedTreeMapSet = (rootMap, keys, value) => {
   const key = keys[i];
   !current.has(key)
     ? current.set(key, {
-        value
+        value,
       })
     : (current.get(key).value = value);
 };
@@ -761,7 +763,7 @@ export function extendDecorate(destinationObject, ...rest) {
           destinationObject,
           sourceObject,
           property: key,
-          path: [...currentPath, key]
+          path: [...currentPath, key],
         });
       }
     };
@@ -809,7 +811,7 @@ export function extendDecorate(destinationObject, ...rest) {
           destinationObject,
           sourceObject,
           property,
-          path: currentPath
+          path: currentPath,
         } = currentStack.pop();
         if (
           sourceObject[property] &&
@@ -1052,7 +1054,7 @@ export function partialShallowEqual(obj, partialObj) {
 export function shallowObjectDiff(objA, objB) {
   const diff = {
     objA: {},
-    objB: {}
+    objB: {},
   };
   if (shallowEqual(objA, objB)) {
     return diff;
@@ -1102,7 +1104,7 @@ export const mapObject = (obj, fn) =>
   Object.fromEntries(
     Object.entries(obj).map(([key, value], index) => [
       key,
-      fn(value, key, index)
+      fn(value, key, index),
     ])
   );
 
