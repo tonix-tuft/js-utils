@@ -34,6 +34,7 @@ export {
   isArray,
   isEmpty,
   isEmptyOr0,
+  getGlobalObject,
   uniqueId,
   deepArrayCompare,
   deepObjectCompare,

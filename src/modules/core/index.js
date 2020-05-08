@@ -116,6 +116,15 @@ export function isEmptyOr0(data) {
 }
 
 /**
+ * Returns a reference to the global object.
+ *
+ * @return {Window|global} The global object (this function is cross-platform aware).
+ */
+export function getGlobalObject() {
+  return typeof global !== "undefined" ? global : window;
+}
+
+/**
  * @type {string}
  */
 const JSUtlUniqueIdCounterProp = "JSUtlUniqueIdCounterLEzKKl87QCDxwVH";
@@ -128,9 +137,11 @@ const JSUtlUniqueIdCounterProp = "JSUtlUniqueIdCounterLEzKKl87QCDxwVH";
  * @return {string} The unique ID.
  */
 export function uniqueId(uniqueIdPrefix = void 0) {
-  window[JSUtlUniqueIdCounterProp] = window[JSUtlUniqueIdCounterProp] || 0;
-  window[JSUtlUniqueIdCounterProp]++;
-  const uniqueIdCounter = window[JSUtlUniqueIdCounterProp];
+  const globalObject = getGlobalObject();
+  globalObject[JSUtlUniqueIdCounterProp] =
+    globalObject[JSUtlUniqueIdCounterProp] || 0;
+  globalObject[JSUtlUniqueIdCounterProp]++;
+  const uniqueIdCounter = globalObject[JSUtlUniqueIdCounterProp];
   const uniqueId = (uniqueIdPrefix || config.uniqueIdPrefix) + uniqueIdCounter;
   return uniqueId;
 }
