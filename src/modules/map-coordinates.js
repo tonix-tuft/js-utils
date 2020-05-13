@@ -35,10 +35,10 @@
  * This means that if the value specified is less than -90, it will be set to -90.
  * And if the value is greater than 90, it will be set to 90.
  *
- * @param {number} lat Latitude.
+ * @param {number|string} lat Latitude. Either a number or a string which can be casted to a number.
  * @return {number} Latitude, clamped.
  */
-export const clampLat = lat => (lat < -90 ? -90 : lat > 90 ? 90 : lat);
+export const clampLat = lat => Number(lat < -90 ? -90 : lat > 90 ? 90 : lat);
 
 /**
  * Wraps a longitude value so that it is always between -180 and 180.
@@ -49,10 +49,11 @@ export const clampLat = lat => (lat < -90 ? -90 : lat > 90 ? 90 : lat);
  * A value of 190 will be converted to -170.
  * This reflects the fact that longitudes wrap around the globe.
  *
- * @param {number} lng Longitude.
+ * @param {number|string} lng Longitude. Either a number or a string which can be casted to a number.
  * @return {number} lng Longitude, wrapped.
  */
 export const wrapLng = lng => {
+  lng = Number(lng);
   while (lng > 180) {
     lng -= 360;
   }
@@ -69,7 +70,7 @@ export const wrapLng = lng => {
  * 2. normalizeLat(0) === 90;
  * 3. normalizeLat(-90) === 180;
  *
- * @param {number} lat Latitude.
+ * @param {number|string} lat Latitude. Either a number or a string which can be casted to a number.
  * @return {number} Latitude, normalized.
  */
 export const normalizeLat = lat => {
@@ -90,7 +91,7 @@ export const normalizeLat = lat => {
  * 2. normalizeLng(0) === 180;
  * 3. normalizeLng(180) === 360;
  *
- * @param {number} lng Longitude.
+ * @param {number} lng Longitude. Either a number or a string which can be casted to a number.
  * @return {number} Longitude, normalized.
  */
 export const normalizeLng = lng => {
