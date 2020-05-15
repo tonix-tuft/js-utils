@@ -202,3 +202,4 @@ export {
   normalizeLng,
 } from "./modules/map-coordinates";
 export { xrange } from "./modules/iterator";
+export { isValidDate, isValidDateTimeStr } from "./modules/date";
