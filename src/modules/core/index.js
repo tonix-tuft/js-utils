@@ -72,6 +72,21 @@ export const isObject = function (obj) {
 };
 
 /**
+ * Tests if a variable is a plain object (i.e. "{}", an object literal).
+ *
+ * @param {*} obj The variable to test.
+ * @return {boolean} "true" if "obj" is a plain object, "false" otherwise.
+ */
+export const isPlainObject = obj => {
+  return (
+    obj !== null &&
+    typeof obj === "object" &&
+    obj.constructor === Object &&
+    isObject(obj)
+  );
+};
+
+/**
  * Tests to see whether something is an array or not.
  *
  * @param {*} something A variable to check whether it is an array or not.
@@ -413,15 +428,14 @@ export function deepArrayCompare(arr1, arr2) {
   if (arr1.length != arr2.length) {
     return false;
   }
-  const toString = Object.prototype.toString,
-    objectToStringStr = toString.call({});
+  const toString = Object.prototype.toString;
   const arrayToStringStr = toString.call([]);
   for (let i = 0; i < arr1.length; i++) {
     if (!(i in arr2)) {
       return false;
-    } else if (objectToStringStr === toString.call(arr1[i])) {
+    } else if (isPlainObject(arr1[i])) {
       if (
-        objectToStringStr !== toString.call(arr2[i]) ||
+        !isPlainObject(arr2[i]) ||
         // eslint-disable-next-line @typescript-eslint/no-use-before-define
         !deepObjectCompare(arr1[i], arr2[i])
       ) {
@@ -451,17 +465,16 @@ export function deepArrayCompare(arr1, arr2) {
  * @return {boolean} True if they are equal (same properties and same values), false otherwise.
  */
 export function deepObjectCompare(obj1, obj2) {
-  const toString = Object.prototype.toString,
-    objectToStringStr = toString.call({});
+  const toString = Object.prototype.toString;
   const arrayToStringStr = toString.call([]);
   for (const property in obj1) {
     if (!(property in obj2)) {
       // `obj2[property]` does not contain the property of `obj1`.
       return false;
-    } else if (objectToStringStr === toString.call(obj1[property])) {
+    } else if (isPlainObject(obj1[property])) {
       // `obj1[property]` is an object.
       if (
-        objectToStringStr !== toString.call(obj2[property]) ||
+        !isPlainObject(obj2[property]) ||
         !deepObjectCompare(obj1[property], obj2[property])
       ) {
         // `obj2[property]` is not an object or the branches are different.
@@ -669,13 +682,8 @@ export function cloneObjDeeply(object) {
  * @return {undefined}
  */
 export function deepObjectExtend(destinationObject, sourceObject) {
-  const toString = Object.prototype.toString,
-    objectToStringStr = toString.call({});
   for (const property in sourceObject) {
-    if (
-      sourceObject[property] &&
-      objectToStringStr === toString.call(sourceObject[property])
-    ) {
+    if (sourceObject[property] && isPlainObject(sourceObject[property])) {
       destinationObject[property] = destinationObject[property] || {};
       deepObjectExtend(destinationObject[property], sourceObject[property]);
     } else {
@@ -695,15 +703,10 @@ export function deepObjectExtend(destinationObject, sourceObject) {
 export function deepObjectCloningExtend(...args) {
   const destinationObject = args[0];
   let sourceObject;
-  const toString = Object.prototype.toString,
-    objectToStringStr = toString.call({});
   for (let i = 1; args[i]; i++) {
     sourceObject = args[i];
     for (const property in sourceObject) {
-      if (
-        sourceObject[property] &&
-        objectToStringStr === toString.call(sourceObject[property])
-      ) {
+      if (sourceObject[property] && isPlainObject(sourceObject[property])) {
         destinationObject[property] = destinationObject[property] || {};
         deepObjectExtend(
           destinationObject[property],
@@ -754,9 +757,6 @@ export function extendDecorate(destinationObject, ...rest) {
   const rules = rest[rest.length - 1];
   rest.pop();
   if (isArray(rules)) {
-    const toString = Object.prototype.toString,
-      objectToStringStr = toString.call({});
-    const objectConstructorName = {}.constructor.name;
     const sourceObjects = rest;
     const initialRetValue = {};
     const matchedRulesMap = new Map();
@@ -824,17 +824,13 @@ export function extendDecorate(destinationObject, ...rest) {
           property,
           path: currentPath,
         } = currentStack.pop();
-        if (
-          sourceObject[property] &&
-          objectToStringStr === toString.call(sourceObject[property]) &&
-          sourceObject[property].constructor &&
-          objectConstructorName === sourceObject[property].constructor.name
-        ) {
+        if (sourceObject[property] && isPlainObject(sourceObject[property])) {
           // "sourceObject[property]" is an object of class "Object".
-          destinationObject[property] =
-            objectToStringStr === toString.call(destinationObject[property])
-              ? destinationObject[property]
-              : {};
+          destinationObject[property] = isPlainObject(
+            destinationObject[property]
+          )
+            ? destinationObject[property]
+            : {};
           mapKeys(
             destinationObject[property],
             sourceObject[property],

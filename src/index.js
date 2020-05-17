@@ -31,6 +31,7 @@ export {
   config,
   isObjectEmpty,
   isObject,
+  isPlainObject,
   isArray,
   isEmpty,
   isEmptyOr0,
@@ -137,6 +138,7 @@ export {
   getDecodedJSONFromFragmentURI,
   getQueryStringArgsMultiDim,
   cursorFocus,
+  parseQueryStringArgsMultiDim,
 } from "./modules/web";
 export {
   randomInt,

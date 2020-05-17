@@ -27,7 +27,7 @@
  * Web application (browser) utility functions.
  */
 
-import { config, uniqueId, isEmpty, isJSONString, isObject } from "./core";
+import { config, uniqueId, isEmpty, isJSONString, isPlainObject } from "./core";
 
 /**
  * Builds a form data instance or object recursively.
@@ -355,7 +355,7 @@ export function elementInnerDimensions(element) {
     parseFloat(computedStyle.paddingRight);
   return {
     width: elementWidth,
-    height: elementHeight
+    height: elementHeight,
   };
 }
 
@@ -510,10 +510,10 @@ export function copyTextToClipboard(text, onSuccess, onFailure) {
     return;
   }
   navigator.clipboard.writeText(text).then(
-    function() {
+    function () {
       onSuccess && onSuccess();
     },
-    function(err) {
+    function (err) {
       onFailure && onFailure(err);
     }
   );
@@ -608,7 +608,7 @@ export function getDecodedJSONFromFragmentURI(defaultData = null) {
  * @param {Object} [array] The base object to use (or a new object if omitted or falsy).
  * @return {Object} The object with the parsed data.
  */
-function parseQueryStringArgsMultiDim(str, array) {
+export function parseQueryStringArgsMultiDim(str, array) {
   if (!str) {
     str = window.location.search.substr(1);
   }
@@ -626,12 +626,9 @@ function parseQueryStringArgsMultiDim(str, array) {
     postLeftBracketPos,
     keys,
     keysLen;
-  const strArr = String(str)
-      .replace(/^&/, "")
-      .replace(/&$/, "")
-      .split("&"),
+  const strArr = String(str).replace(/^&/, "").replace(/&$/, "").split("&"),
     sal = strArr.length,
-    fixStr = function(str) {
+    fixStr = function (str) {
       return decodeURIComponent(str.replace(/\+/g, "%20"));
     };
 
@@ -714,7 +711,7 @@ function parseQueryStringArgsMultiDim(str, array) {
    * from 0 to n, where n is the number of properties of that object minus one
    * (i.e. it converts meaningful objects which are to be interpreted as arrays to arrays).
    */
-  const fnNormalizeObjToArrayIfPropsAreConsecutiveIntsFrom0 = function(obj) {
+  const fnNormalizeObjToArrayIfPropsAreConsecutiveIntsFrom0 = function (obj) {
     const keys = Object.keys(obj);
     const truthMap = {};
     for (let i = 0; i < keys.length; i++) {
@@ -745,7 +742,7 @@ function parseQueryStringArgsMultiDim(str, array) {
 
   const fnNormalizeToArrayIfNeeded = function fnNormalizeToArrayIfNeeded(obj) {
     for (const prop in obj) {
-      if (isObject(obj[prop])) {
+      if (isPlainObject(obj[prop])) {
         obj[prop] = fnNormalizeObjToArrayIfPropsAreConsecutiveIntsFrom0(
           obj[prop]
         );
@@ -779,7 +776,7 @@ export function getQueryStringArgsMultiDim() {
  *
  * @param {Element} elem The DOM element.
  */
-export const cursorFocus = function(elem) {
+export const cursorFocus = function (elem) {
   let x, y;
   // More sources for scroll x, y offset.
   if (typeof window.pageXOffset !== "undefined") {
