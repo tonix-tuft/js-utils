@@ -115,7 +115,7 @@ export const curry = (
     onPlaceholder = void 0,
     onFnCall = void 0,
     onCurriedFnFirstCall = void 0,
-    onNewCurriedFn = void 0
+    onNewCurriedFn = void 0,
   } = {}
 ) => {
   let curriedFnFirstCall = true;
@@ -304,7 +304,7 @@ export const POJOCurry = (
     onPOJOArgMerged = void 0,
     onFnCall = void 0,
     onCurriedFnFirstCall = void 0,
-    onNewCurriedFn = void 0
+    onNewCurriedFn = void 0,
   } = {}
 ) => {
   const POJO = {};
@@ -494,5 +494,23 @@ export const flatten = arr => Array.prototype.concat.apply([], arr);
  */
 export const cartesianProduct = (...sets) =>
   sets.reduce((acc, set) => flatten(acc.map(x => set.map(y => [...x, y]))), [
-    []
+    [],
   ]);
+
+/**
+ * Identity function.
+ *
+ * @see https://en.wikipedia.org/wiki/Identity_function
+ *
+ * @param {*} value Any value.
+ * @return {*} The same passed value.
+ */
+export const identityFn = value => value;
+
+/**
+ * Identity function for multiple args returning an array of those args.
+ *
+ * @param  {...*} args The args.
+ * @return {Array} The same args returned in an array.
+ */
+export const identityArgsFn = (...args) => args;

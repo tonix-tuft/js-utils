@@ -100,6 +100,8 @@ export {
   forGen,
   flatten,
   cartesianProduct,
+  identityFn,
+  identityArgsFn,
 } from "./modules/fn";
 export { stringHashArray, hashString, onePassStringHash } from "./modules/hash";
 export {
