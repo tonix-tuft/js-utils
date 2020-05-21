@@ -738,9 +738,9 @@ export function extend(destinationObj, ...sourceObjects) {
  *
  * @param {Object} destinationObject The destination object.
  * @param {...*} rest The source objects with the last parameter being an array of rules,
- *                    each rule being a tuple array where the first element is an array of "ORed" property names (strings or numbers),
- *                    symbols or regexes matching property names for which the corresponding values should be decorated
- *                    (or a single property name, symbol or regex matching a property name if the decoration should only happen on a single property),
+ *                    each rule being a tuple array where the first element is an array of "ORed" property names (strings or numbers)
+ *                    or regexes matching property names for which the corresponding values should be decorated
+ *                    (or a single property name or regex matching a property name if the decoration should only happen on a single property),
  *                    and where the second element is a callback to execute for each value which is a value of a property
  *                    of a source object.
  *                    The callback has the following signature:
@@ -750,13 +750,16 @@ export function extend(destinationObj, ...sourceObjects) {
  *                    The callback will receive the final value after extension, its associated property and the parent object
  *                    where that property is set with that value.
  *                    Its returned value will be used as the final value of the property for that object in "destinationObject".
+ * 
+ *                    If the last parameter is not an array of rules, it will be treated as the last source object to use for the extension
+ *                    (the "extend" function will be simply called under the hood without any decoration logic).
  * @return {Object} The destination object "destinationObj" given as parameter after extension and, if the callback is given
  *                  as the last parameter, after applying the given callback.
  */
 export function extendDecorate(destinationObject, ...rest) {
   const rules = rest[rest.length - 1];
-  rest.pop();
   if (isArray(rules)) {
+    rest.pop();
     const sourceObjects = rest;
     const initialRetValue = {};
     const matchedRulesMap = new Map();
@@ -768,8 +771,7 @@ export function extendDecorate(destinationObject, ...rest) {
       currentStack,
       currentPath
     ) => {
-      const keys = Reflect.ownKeys(sourceObject);
-      for (const key of keys) {
+      for (const key in sourceObject) {
         currentStack.push({
           destinationObject,
           sourceObject,
@@ -876,7 +878,6 @@ export function extendDecorate(destinationObject, ...rest) {
 
     return destinationObject;
   } else {
-    rest.push(rules);
     return extend(destinationObject, ...rest);
   }
 }
