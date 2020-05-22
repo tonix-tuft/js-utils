@@ -99,6 +99,7 @@ export {
   execWithExistentProps,
   forGen,
   flatten,
+  flattenDeep,
   cartesianProduct,
   identityFn,
   identityArgsFn,

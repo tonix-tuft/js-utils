@@ -27,7 +27,8 @@
  * Utility functions for functional programming.
  */
 
-import { isObjectEmpty } from "./core";
+import { isObjectEmpty, isArray } from "./core";
+import { arrayOrArrayLike } from "./array";
 
 /**
  * Curry function placeholder.
@@ -485,6 +486,23 @@ export const forGen = gen => (...args) => fn => {
  * @return {Array} A new flattened array.
  */
 export const flatten = arr => Array.prototype.concat.apply([], arr);
+
+/**
+ * Flattens an array with any dimension.
+ *
+ * @param {Array} arr An array.
+ * @param {number} dimension The flattening dimension (defaults to 1, but can be greater, even "Infinity").
+ * @return {Array} The flattened array.
+ */
+export const flattenDeep = (arr, dimension = 1) => {
+  return dimension > 0
+    ? arr.reduce(
+        (acc, val) =>
+          acc.concat(isArray(val) ? flattenDeep(val, dimension - 1) : val),
+        []
+      )
+    : arrayOrArrayLike(arr);
+};
 
 /**
  * Computes the cartesian product of the given sets.
