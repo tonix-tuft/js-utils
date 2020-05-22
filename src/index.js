@@ -178,6 +178,7 @@ export {
   yieldUniqueProgressiveIncrementalCombinations,
   yieldAllSubsequences,
   yieldUniqueSubsequences,
+  yieldPermutations,
 } from "./modules/combinatorics";
 export { round, sum, intDiv, isEven, isOdd } from "./modules/math";
 export {

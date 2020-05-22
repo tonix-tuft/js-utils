@@ -39,7 +39,7 @@ import { arrayOrArrayLike } from "./array";
  *                                             (this function assumes it to be less than "items.length"
  *                                             and greater than 0).
  * @param {boolean} yieldCopy True if the yielded combination should be a copy (default) or
- *                         the internal array used during the generation of the current combination.
+ *                            the internal array used during the generation of the current combination.
  * @yields {Array} The next combination.
  */
 export const yieldCombinationsWithoutRepetition = function* (
@@ -208,4 +208,37 @@ export const yieldUniqueSubsequences = function* (items) {
       yield subsequence;
     }
   }
+};
+
+/**
+ * Yields all the permutations of the given array of items.
+ *
+ * @generator
+ * @param {Array} items An array of items to use to yield permutations.
+ * @param {boolean} yieldCopy True if the yielded permutation should be a copy (default) or
+ *                            the internal array used during the generation of the current permutation.
+ * @yields {Array} The next permutation.
+ */
+export const yieldPermutations = function* (items, yieldCopy = true) {
+  const currentPermutationPrefix = [];
+  const currentPermutationIndicesMap = {};
+  const permute = function* () {
+    if (currentPermutationPrefix.length === items.length) {
+      yield yieldCopy
+        ? arrayOrArrayLike(currentPermutationPrefix)
+        : currentPermutationPrefix;
+    } else {
+      for (let i = 0; i < items.length; i++) {
+        if (currentPermutationIndicesMap[i]) {
+          continue;
+        }
+        currentPermutationPrefix.push(items[i]);
+        currentPermutationIndicesMap[i] = true;
+        yield* permute();
+        delete currentPermutationIndicesMap[i];
+        currentPermutationPrefix.pop();
+      }
+    }
+  };
+  yield* permute();
 };
