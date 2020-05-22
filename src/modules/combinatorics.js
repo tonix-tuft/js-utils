@@ -42,7 +42,7 @@ import { arrayOrArrayLike } from "./array";
  *                         the internal array used during the generation of the current combination.
  * @yields {Array} The next combination.
  */
-export const yieldCombinationsWithoutRepetition = function*(
+export const yieldCombinationsWithoutRepetition = function* (
   items,
   numberOfItemsPerCombination,
   yieldCopy = true
@@ -137,7 +137,7 @@ export const uniqueProgressiveIncrementalCombinations = items => {
  * @yields {Array} An array, each representing the next unique progressive incremental combination.
  *                 An empty array is yielded if the given items array is empty.
  */
-export const yieldUniqueProgressiveIncrementalCombinations = function*(
+export const yieldUniqueProgressiveIncrementalCombinations = function* (
   items,
   yieldCopy = true
 ) {
@@ -183,7 +183,7 @@ export const yieldUniqueProgressiveIncrementalCombinations = function*(
  * @param {Array} items An array of items to use to yield subsequences.
  * @yields {Array} The next subsequence.
  */
-export const yieldAllSubsequences = function*(items) {
+export const yieldAllSubsequences = function* (items) {
   const l = items.length;
   for (let i = 0; i <= l; i++) {
     for (const combination of yieldCombinationsWithoutRepetition(items, i)) {
@@ -199,7 +199,7 @@ export const yieldAllSubsequences = function*(items) {
  * @param {Array} items An array of items to use to yield subsequences.
  * @yields {Array} The next unique subsequence.
  */
-export const yieldUniqueSubsequences = function*(items) {
+export const yieldUniqueSubsequences = function* (items) {
   const map = new Map();
   yield [];
   for (const subsequence of yieldAllSubsequences(items)) {
