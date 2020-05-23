@@ -750,7 +750,7 @@ export function extend(destinationObj, ...sourceObjects) {
  *                    The callback will receive the final value after extension, its associated property and the parent object
  *                    where that property is set with that value.
  *                    Its returned value will be used as the final value of the property for that object in "destinationObject".
- * 
+ *
  *                    If the last parameter is not an array of rules, it will be treated as the last source object to use for the extension
  *                    (the "extend" function will be simply called under the hood without any decoration logic).
  * @return {Object} The destination object "destinationObj" given as parameter after extension and, if the callback is given
@@ -851,12 +851,12 @@ export function extendDecorate(destinationObject, ...rest) {
           nestedTreeMapSet(
             callbacksMap,
             currentPath,
-            callbacks.map(callback => retValue => {
+            callbacks.map(callback => retValue => path => {
               const value =
                 retValue === initialRetValue
                   ? destinationObject[property]
                   : retValue;
-              return callback(value, property, destinationObject);
+              return callback(value, property, destinationObject, path);
             })
           );
         }
@@ -869,7 +869,7 @@ export function extendDecorate(destinationObject, ...rest) {
       const callbacks = nestedTreeMapGet(callbacksMap, path) || [];
       let retValue = initialRetValue;
       for (const callback of callbacks) {
-        retValue = callback(retValue);
+        retValue = callback(retValue)(path);
       }
       if (retValue !== initialRetValue) {
         setNestedPropertyValue(destinationObject, path, retValue);
