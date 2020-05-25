@@ -31,16 +31,32 @@ import { isObjectEmpty, isArray } from "./core";
 import { arrayOrArrayLike } from "./array";
 
 /**
+ * @type {string}
+ */
+const JSUtlCurryPlaceholderProp = "JSUtlCurryPlaceholderPropRPecoyYmCYqZ2lE";
+
+/**
  * Curry function placeholder.
  *
- * @type Object
+ * @type {Object}
  */
-export const _ = {};
+export const _ = {
+  [JSUtlCurryPlaceholderProp]: true,
+};
+
+/**
+ * @type {string}
+ */
+const JSUtlProceedCallingFnProp = "JSUtlProceedCallingFnPropRBmGaAgOCgftF9t";
 
 /**
  * Return value of "onFnCall" to call the curried function and return its value.
+ *
+ * @type {Object}
  */
-export const proceedCallingFn = {};
+export const proceedCallingFn = {
+  [JSUtlProceedCallingFnProp]: true,
+};
 
 /**
  * Curries a function.
@@ -146,7 +162,9 @@ export const curry = (
         !argsRequiredChange && (args = [...args]);
         argsRequiredChange = true;
         // "addedArg" may be either a placeholder or an effective argument.
-        const isPlaceholder = addedArg === _;
+        const isPlaceholder = addedArg
+          ? addedArg[JSUtlCurryPlaceholderProp] === _[JSUtlCurryPlaceholderProp]
+          : false;
         if (numberOfConsumablePlaceholders > 0 && !isPlaceholder) {
           // Argument is an effective argument consuming a previously set placeholder.
           onEffectiveArgAdded &&
@@ -206,7 +224,11 @@ export const curry = (
     if (expectedNumberOfArgs <= 0) {
       if (onFnCall) {
         const shouldCallCurriedFn = onFnCall({ args, fn, curriedFn });
-        if (shouldCallCurriedFn === proceedCallingFn) {
+        if (
+          shouldCallCurriedFn &&
+          shouldCallCurriedFn[JSUtlProceedCallingFnProp] ===
+            proceedCallingFn[JSUtlProceedCallingFnProp]
+        ) {
           return fn(...args);
         } else {
           return shouldCallCurriedFn;
@@ -334,7 +356,10 @@ export const POJOCurry = (
         let ret = void 0;
         if (onFnCall) {
           ret = onFnCall({ POJO, fn, curriedFn });
-          shouldCallCurriedFn = ret === proceedCallingFn;
+          shouldCallCurriedFn = ret
+            ? ret[JSUtlProceedCallingFnProp] ===
+              proceedCallingFn[JSUtlProceedCallingFnProp]
+            : false;
         }
 
         if (shouldCallCurriedFn) {
