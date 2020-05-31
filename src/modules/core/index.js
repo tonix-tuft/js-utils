@@ -1144,14 +1144,14 @@ export const propSelection = (obj, fn = isTruthy) =>
  * Returns all the properties of the given object traversing its prototype chain.
  *
  * @param {Object} obj The object.
- * @param {Object} options An object with options.
- * @param {?Object} options.stopAtPrototype The prototype in the chain at which to stop the traversing.
- *                                          Defaults to null, in which case the whole prototype chain will be traversed.
- * @param {boolean} options.stopAtPrototypeInclude Whether or not to include the properties of the given prototype at which to stop.
- *                                                 Works only if "stopAtPrototype" is set to a valid prototype object in the prototype chain
- *                                                 of "obj".
- *                                                 Defaults to true, in which case the properties of the prototype at which to stop will be included
- *                                                 in the returned array.
+ * @param {Object} [options] An object with options.
+ * @param {?Object} [options.stopAtPrototype] The prototype in the chain at which to stop the traversing.
+ *                                            Defaults to null, in which case the whole prototype chain will be traversed.
+ * @param {boolean} [options.stopAtPrototypeInclude] Whether or not to include the properties of the given prototype at which to stop.
+ *                                                   Works only if "stopAtPrototype" is set to a valid prototype object in the prototype chain
+ *                                                   of "obj".
+ *                                                   Defaults to true, in which case the properties of the prototype at which to stop will be included
+ *                                                   in the returned array.
  * @return {string[]} An array of containing the names of the properties.
  */
 export function prototypeChainProperties(
