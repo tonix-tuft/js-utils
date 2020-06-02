@@ -84,6 +84,7 @@ export {
   mapObject,
   propSelection,
   prototypeChainProperties,
+  prop,
 } from "./modules/core";
 export {
   _,

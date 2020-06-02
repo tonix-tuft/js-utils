@@ -1176,3 +1176,21 @@ export function prototypeChainProperties(
   const properties = Object.keys(map);
   return properties;
 }
+
+/**
+ * Defines an object's property with a getter and an optional setter.
+ *
+ * @param {Object} obj An object (may be a prototype).
+ * @param {string} propname The property name.
+ * @param {Function} getfn Getter function.
+ * @param {Function|undefined} [setfn] Setter function.
+ * @return {undefined}
+ */
+export function prop(obj, propname, getfn, setfn = void 0) {
+  const propObj = {};
+  propObj[propname] = {
+    get: getfn,
+    set: setfn,
+  };
+  Object.defineProperties(obj, propObj);
+}
