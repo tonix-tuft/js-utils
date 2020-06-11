@@ -679,12 +679,28 @@ export function cloneObjDeeply(object) {
  *
  * @param {Object} destinationObject The destination object which will be modified and merged with the source object.
  * @param {Object} sourceObject The source object which will be used to extend the destination object.
+ * @param {Object} [options] An object containing the options for the extension.
+ *                           The currently available options are:
+ *
+ *                               - extendsArrays (boolean: false): Whether or not to extend nested arrays too (defaults to false);
+ *
  * @return {undefined}
  */
-export function deepObjectExtend(destinationObject, sourceObject) {
+export function deepObjectExtend(
+  destinationObject,
+  sourceObject,
+  options = {}
+) {
   for (const property in sourceObject) {
     if (sourceObject[property] && isPlainObject(sourceObject[property])) {
       destinationObject[property] = destinationObject[property] || {};
+      deepObjectExtend(destinationObject[property], sourceObject[property]);
+    } else if (
+      options.extendArrays &&
+      sourceObject[property] &&
+      isArray(sourceObject[property])
+    ) {
+      destinationObject[property] = destinationObject[property] || [];
       deepObjectExtend(destinationObject[property], sourceObject[property]);
     } else {
       destinationObject[property] = sourceObject[property];
@@ -723,12 +739,27 @@ export function deepObjectCloningExtend(...args) {
  * Extends a destination object with the provided source objects.
  *
  * @param {Object} destinationObj The destination object.
- * @param {...Object} sourceObjects The source objects.
+ * @param {...Object|Array} sourceObjects The source objects. If the last argument is an array containing one single truthy element,
+ *                                        it will be treated as an options parameter and its single first truthy element will be treated as object
+ *                                        containing the options for the extension.
+ *                                        The currently available options are:
+ *
+ *                                            - extendsArrays (boolean: false): Whether or not to extend nested arrays too (defaults to false);
+ *
  * @return {Object} The destination object "destinationObj" given as parameter after extension.
  */
 export function extend(destinationObj, ...sourceObjects) {
+  let options = {};
+  if (sourceObjects.length) {
+    const last = sourceObjects.pop();
+    if (isArray(last) && last.length === 1 && isPlainObject(last[0])) {
+      options = last[0];
+    } else {
+      sourceObjects.push(last);
+    }
+  }
   for (const sourceObject of sourceObjects) {
-    deepObjectExtend(destinationObj, sourceObject);
+    deepObjectExtend(destinationObj, sourceObject, options);
   }
   return destinationObj;
 }
