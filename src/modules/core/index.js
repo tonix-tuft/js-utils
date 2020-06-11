@@ -694,14 +694,22 @@ export function deepObjectExtend(
   for (const property in sourceObject) {
     if (sourceObject[property] && isPlainObject(sourceObject[property])) {
       destinationObject[property] = destinationObject[property] || {};
-      deepObjectExtend(destinationObject[property], sourceObject[property]);
+      deepObjectExtend(
+        destinationObject[property],
+        sourceObject[property],
+        options
+      );
     } else if (
       options.extendArrays &&
       sourceObject[property] &&
       isArray(sourceObject[property])
     ) {
       destinationObject[property] = destinationObject[property] || [];
-      deepObjectExtend(destinationObject[property], sourceObject[property]);
+      deepObjectExtend(
+        destinationObject[property],
+        sourceObject[property],
+        options
+      );
     } else {
       destinationObject[property] = sourceObject[property];
     }
