@@ -28,19 +28,26 @@
  */
 
 /**
- * Filters the given string so that it only includes digit (0-9),
+ * Filters the given string so that it only includes digit (0-9)
+ * and an optional leading sign ("+", which is removed if present, or "-"),
  * i.e. represents a valid integer parsable with "Number.parseInt()".
  *
  * @param {string} str The input string.
  * @return {string} The valid input string or an empty string if there isn't any digit.
  */
 export function filterInt(str) {
-  const filtered = str.replace(/[^0-9]/g, "");
+  let filtered = str.replace(/[^0-9]/g, "");
+  filtered = filtered.replace(/^[0]+([1-9])/, "$1");
+  filtered = filtered.replace(/^[0]+$/, "0");
+  if (str && filtered.length && str[0] === "-") {
+    filtered = `-${filtered}`;
+  }
   return filtered;
 }
 
 /**
- * Filters the given string so that it only includes digits (0-9) and a decimal separator ("." character),
+ * Filters the given string so that it only includes digits (0-9), a decimal separator ("." character)
+ * and an optional leading sign ("+", which is removed if present, or "-"),
  * i.e. represents a valid float parsable with "Number.parseFloat()".
  *
  * @param {string} str The input string.
@@ -49,7 +56,17 @@ export function filterInt(str) {
  *                  the returned string will be "0.", i.e. a parsable "0." string.
  */
 export function filterFloat(str) {
-  let filtered = str.replace(/[^0-9.]/g, "").replace(/(\..*)\./g, "$1");
+  let filtered = str.replace(/[^0-9.]/g, "");
+  const regex = /(\..*)\./g;
+  const replace = "$1";
+  do {
+    filtered = filtered.replace(regex, replace);
+  } while (filtered != filtered.replace(regex, replace));
   filtered === "." ? (filtered = "0.") : filtered;
+  filtered = filtered.replace(/^[0]+([1-9])/, "$1");
+  filtered = filtered.replace(/^[0]+($|\.)/, "0$1");
+  if (str && filtered.length && str[0] === "-") {
+    filtered = `-${filtered}`;
+  }
   return filtered;
 }
