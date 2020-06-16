@@ -79,3 +79,21 @@ export function isEven(num) {
 export function isOdd(num) {
   return !isEven(num);
 }
+
+/**
+ * Converts a source value of a source range to a value that is proportional
+ * in another destination range.
+ *
+ * @param {number[]} sourceTuple The source range tuple, i.e. a tuple of two values, the starting value of the range at index 0 and the ending value of the range at index 1,
+ *                               respectively.
+ *                               This function assumes that both the starting and ending values are positive numbers (the starting value can be 0).
+ * @return {(destRange: number[]) => (sourceValue: number) => number} A function receiving the destination range tuple as argument (having the same shape as the source range)
+ *                                                                    returning a function taking the source value as argument returning the value proportional
+ *                                                                    in the destination range.
+ */
+export const proportion = ([sourceFrom, sourceTo]) => ([
+  destFrom,
+  destTo,
+]) => sourceValue =>
+  (sourceValue - sourceFrom) * ((destTo - destFrom) / (sourceTo - sourceFrom)) +
+  destFrom;
