@@ -27,7 +27,7 @@
  * Utility functions for functional programming.
  */
 
-import { isObjectEmpty, isArray } from "./core";
+import { isObjectEmpty, isArray, noOpFn } from "./core";
 import { arrayOrArrayLike } from "./array";
 
 /**
@@ -383,13 +383,12 @@ export const POJOCurry = (
 };
 
 /**
- * A utility function which composes functions or higher order functions.
+ * A utility function which composes functions or higher-order functions.
  *
- * @param {...Function|...Function[]} fns A list of functions or higher order functions or arrays of functions
+ * @param {...Function|...Function[]} fns A list of functions or higher-order functions or arrays of functions
  *                                        (arrays will be flattened) to compose.
- * @return {Function|undefined} A function composed of all the functions or higher order functions
- *                              used for composition.
- *                              If no functions are given, "undefined" will be returned.
+ * @return {Function} A function composed of all the functions or higher-order functions
+ *                    used for composition.
  */
 export const compose = (...fns) => (...args) => {
   let outerArgs = args;
@@ -409,13 +408,10 @@ export const compose = (...fns) => (...args) => {
  * @param {...Function|...Function[]} fns A list of functions or arrays of functions (arrays will be flattened)
  *                                        to pipe.
  * @return {Function} A function representing the pipe.
- *                    If not functions are given, "undefined" will be returned.
  */
-export const pipe = (...functions) => (...args) => {
-  functions = functions.flat(1);
-  return functions.length
-    ? functions.reduce((arg, fn) => [fn(...arg)], args)[0]
-    : void 0;
+export const pipe = (...fns) => (...args) => {
+  fns = fns.flat(1);
+  return fns.length ? fns.reduce((arg, fn) => [fn(...arg)], args)[0] : void 0;
 };
 
 /**
@@ -432,8 +428,8 @@ export const pick = (...props) => o =>
  * Lifts two functions using a binary function which takes their results as arguments.
  *
  * @param {Function} binaryFn A binary function (i.e. a function which takes two arguments).
- * @return {Function} A higher order function which has to be called with the first function as argument ("firstFn")
- *                    and returns another higher order function which has to be called with the second function as argument ("secondFn").
+ * @return {Function} A higher-order function which has to be called with the first function as argument ("firstFn")
+ *                    and returns another higher-order function which has to be called with the second function as argument ("secondFn").
  *                    Then, the returned function will take the parameters to pass to the two functions ("firstFn" and "secondFn")
  *                    and return the result of calling "binaryFn" with the result of those functions given as parameters.
  */
@@ -455,7 +451,7 @@ export const juxt = fns => (...values) => fns.map(fn => fn(...values));
  * @param {Function} multiArgFn A multi-arg function.
  * @param {Function[]} fns An array of functions to converge.
  *                         Each function will receive the parameter passed to the function returned
- *                         by this higher order function (i.e. "params").
+ *                         by this higher-order function (i.e. "params").
  * @return {Function} A function which, if called, will pass its arguments to each of the functions in "fns"
  *                    and pass each result of those functions to the multi-arg function "multiArgFn",
  *                    returning its result.
@@ -557,3 +553,25 @@ export const identityFn = value => value;
  * @return {Array} The same args returned in an array.
  */
 export const identityArgsFn = (...args) => args;
+
+/**
+ * @type {Function}
+ */
+const chainLink = (fn, next) => args =>
+  fn(args, next && ((...args) => next(args)));
+
+/**
+ * A higher-order function to create a chain of functions following the Chain of Responsibility design pattern.
+ *
+ * @param {...Function|...Function[]} fns A list of functions or higher-order functions or arrays of functions
+ *                                        (arrays will be flattened) to chain.
+ * @return {Function} A function representing the chain of the given functions which, if called, will return the result of the chain.
+ *                    Each function will receive the next function as its last parameter.
+ */
+export const chain = (...fns) => (...args) => {
+  fns = fns.flat(1);
+  const chainFn = fns.reduceRight((nextChainLink, fn) => {
+    return chainLink(fn, nextChainLink);
+  }, void 0);
+  return chainFn(args);
+};

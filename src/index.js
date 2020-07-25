@@ -105,6 +105,7 @@ export {
   cartesianProduct,
   identityFn,
   identityArgsFn,
+  chain,
 } from "./modules/fn";
 export { stringHashArray, hashString, onePassStringHash } from "./modules/hash";
 export {
