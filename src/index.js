@@ -50,6 +50,7 @@ export {
   deepObjectCloningExtend,
   extend,
   extendDecorate,
+  shallowExtend,
   includesTypeCoercion,
   nestedPropertyValue,
   getNestedPropertyValue,

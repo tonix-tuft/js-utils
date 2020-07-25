@@ -792,7 +792,7 @@ export function extend(destinationObj, ...sourceObjects) {
  *
  *                    If the last parameter is not an array of rules, it will be treated as the last source object to use for the extension
  *                    (the "extend" function will be simply called under the hood without any decoration logic).
- * @return {Object} The destination object "destinationObj" given as parameter after extension and, if the callback is given
+ * @return {Object} The destination object "destinationObject" given as parameter after extension and, if the callback is given
  *                  as the last parameter, after applying the given callback.
  */
 export function extendDecorate(destinationObject, ...rest) {
@@ -919,6 +919,20 @@ export function extendDecorate(destinationObject, ...rest) {
   } else {
     return extend(destinationObject, ...rest);
   }
+}
+
+/**
+ * Shallowly extends a destination object with the provided source objects (first dimension).
+ *
+ * @param {Object} destinationObject The destination object.
+ * @param {...Object} sourceObjects The source objects.
+ * @return {Object} The destination object "destinationObject" given as parameter after shallow extension.
+ */
+export function shallowExtend(destinationObject, ...sourceObjects) {
+  sourceObjects.map(obj =>
+    Object.keys(obj).map(key => (destinationObject[key] = obj[key]))
+  );
+  return destinationObject;
 }
 
 /**
