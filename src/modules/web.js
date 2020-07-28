@@ -802,3 +802,26 @@ export const cursorFocus = function (elem) {
     window.scrollTo(x, y);
   }
 };
+
+/**
+ * Detects wrapped elements.
+ *
+ * @param {string} className A class name (with or without the leading dot).
+ * @return {Element[]} The wrapped DOM elements.
+ */
+export function detectWrapped(className) {
+  className = className.replace(/^\./, "");
+  const wrapped = [];
+  let prev = {};
+  let curr = {};
+  const elements = document.getElementsByClassName(className);
+  for (let i = 0; i < elements.length; i++) {
+    const element = elements[i];
+    curr = element.getBoundingClientRect();
+    if (prev && prev.top < curr.top) {
+      wrapped.push(element);
+    }
+    prev = i === 0 ? curr : prev;
+  }
+  return wrapped;
+}

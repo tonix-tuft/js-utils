@@ -146,6 +146,7 @@ export {
   getQueryStringArgsMultiDim,
   cursorFocus,
   parseQueryStringArgsMultiDim,
+  detectWrapped,
 } from "./modules/web";
 export {
   randomInt,
