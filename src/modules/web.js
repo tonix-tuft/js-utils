@@ -806,15 +806,20 @@ export const cursorFocus = function (elem) {
 /**
  * Detects wrapped elements.
  *
- * @param {string} className A class name (with or without the leading dot).
+ * @param {string|Element[]} classNameOrElements A class name (with or without the leading dot) or the DOM elements to check.
  * @return {Element[]} The wrapped DOM elements.
  */
-export function detectWrapped(className) {
-  className = className.replace(/^\./, "");
+export function detectWrapped(classNameOrElements) {
+  let elements;
+  if (typeof classNameOrElements === "string") {
+    classNameOrElements = classNameOrElements.replace(/^\./, "");
+    elements = document.getElementsByClassName(classNameOrElements);
+  } else {
+    elements = classNameOrElements;
+  }
   const wrapped = [];
   let prev = {};
   let curr = {};
-  const elements = document.getElementsByClassName(className);
   for (let i = 0; i < elements.length; i++) {
     const element = elements[i];
     curr = element.getBoundingClientRect();
