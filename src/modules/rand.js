@@ -58,6 +58,21 @@ export function randomInt(min = 0, max = Number.MAX_SAFE_INTEGER) {
 }
 
 /**
+ * Generates a random float between min and max integers (both included).
+ *
+ * @param {number} min Min int value.
+ * @param {number} max Max int value.
+ * @return {number} A random float between min and max.
+ */
+export function randomFloat(min = 0, max = 562949953421311) {
+  const randInt = randomInt(min, max);
+  if (randInt >= max) {
+    return randInt;
+  }
+  return randInt + Math.random();
+}
+
+/**
  * Returns a random float (using "Math.random()") not equal to the given value.
  *
  * @param {number} value The given value.

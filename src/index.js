@@ -150,6 +150,7 @@ export {
 } from "./modules/web";
 export {
   randomInt,
+  randomFloat,
   randomStr,
   randomDifferentFromValue,
   randomArrayShuffle,
