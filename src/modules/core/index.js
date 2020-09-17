@@ -1247,3 +1247,20 @@ export function prop(obj, propname, getfn, setfn = void 0) {
   };
   Object.defineProperties(obj, propObj);
 }
+
+/**
+ * Defines a property on an object.
+ *
+ * @param {Object} o An object.
+ * @param {string} p The property to define.
+ * @param {Object} descriptor Optional object containing the descriptor's properties to use to override the default properties.
+ * @return {Object} The object that was passed to the function.
+ */
+export function defineProperty(o, p, descriptor = {}) {
+  return Object.defineProperty(o, p, {
+    configurable: false,
+    enumerable: false,
+    writable: true,
+    ...descriptor,
+  });
+}

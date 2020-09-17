@@ -86,6 +86,7 @@ export {
   propSelection,
   prototypeChainProperties,
   prop,
+  defineProperty,
 } from "./modules/core";
 export {
   _,
