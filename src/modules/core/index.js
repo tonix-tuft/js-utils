@@ -1264,3 +1264,30 @@ export function defineProperty(o, p, descriptor = {}) {
     ...descriptor,
   });
 }
+
+/**
+ * Assigns the properties of the given source objects to the target object.
+ *
+ * @source https://stackoverflow.com/questions/39515321/spread-operator-issues-with-property-accessors-getters#answer-39521418
+ *
+ * @param {Object} target The target object.
+ * @param {...Object} sources The source objects.
+ * @return {Object} The target object.
+ */
+export function completeObjectAssign(target, ...sources) {
+  sources.forEach(source => {
+    const descriptors = Object.keys(source).reduce((descriptors, key) => {
+      descriptors[key] = Object.getOwnPropertyDescriptor(source, key);
+      return descriptors;
+    }, {});
+    // By default, Object.assign copies enumerable Symbols too.
+    Object.getOwnPropertySymbols(source).forEach(sym => {
+      const descriptor = Object.getOwnPropertyDescriptor(source, sym);
+      if (descriptor.enumerable) {
+        descriptors[sym] = descriptor;
+      }
+    });
+    Object.defineProperties(target, descriptors);
+  });
+  return target;
+}

@@ -87,6 +87,7 @@ export {
   prototypeChainProperties,
   prop,
   defineProperty,
+  completeObjectAssign,
 } from "./modules/core";
 export {
   _,
