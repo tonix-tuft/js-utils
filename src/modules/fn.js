@@ -27,7 +27,7 @@
  * Utility functions for functional programming.
  */
 
-import { isObjectEmpty, isArray, noOpFn } from "./core";
+import { isObjectEmpty, isArray } from "./core";
 import { arrayOrArrayLike } from "./array";
 
 /**
