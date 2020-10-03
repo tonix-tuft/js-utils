@@ -156,6 +156,8 @@ export {
   randomStr,
   randomDifferentFromValue,
   randomArrayShuffle,
+  uuid,
+  noncanonicalUUID,
 } from "./modules/rand";
 export { time, msToTime, millisecToSec } from "./modules/time";
 export {
