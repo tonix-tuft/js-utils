@@ -243,3 +243,13 @@ export function startsWith(haystack, needle) {
 export function ucaseFirst(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
+
+/**
+ * Reverses a string.
+ *
+ * @param {string} string A string to reverse.
+ * @return {string} The reversed string.
+ */
+export function reverseString(string) {
+  return string.split("").reverse().join("");
+}

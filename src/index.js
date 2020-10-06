@@ -171,6 +171,7 @@ export {
   optionsValueLabel,
   startsWith,
   ucaseFirst,
+  reverseString,
 } from "./modules/string";
 export { googleMapBestZoomLevelFromBounds } from "./modules/google";
 export { delay, debounce, throttle } from "./modules/callback";
