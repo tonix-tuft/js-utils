@@ -830,3 +830,23 @@ export function detectWrapped(classNameOrElements) {
   }
   return wrapped;
 }
+
+/**
+ * Gets the maximum nesting level of an element (or of the whole DOM if "document.body" is given as parameter).abs
+ *
+ * @param {Element} elem The DOM element from which to start identifying the maximum nesting level.
+ * @return {number} The maximum nesting level, starting from 0 if the given element has no children.
+ */
+export function maxNestingLevel(el) {
+  if (!el.children) {
+    return 0;
+  }
+  let max = -1;
+  for (let i = 0; i < el.children.length; i++) {
+    const nestingLevel = maxNestingLevel(el.children[i]);
+    if (nestingLevel > max) {
+      max = nestingLevel;
+    }
+  }
+  return max + 1;
+}
