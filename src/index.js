@@ -208,6 +208,7 @@ export {
   arrayMin,
   sortNums,
 } from "./modules/array";
+export { objectMin } from "./modules/object";
 export {
   mean,
   median,
