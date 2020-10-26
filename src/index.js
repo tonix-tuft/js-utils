@@ -173,6 +173,7 @@ export {
   startsWith,
   ucaseFirst,
   reverseString,
+  separateIntThousands,
 } from "./modules/string";
 export { googleMapBestZoomLevelFromBounds } from "./modules/google";
 export { delay, debounce, throttle } from "./modules/callback";

@@ -253,3 +253,22 @@ export function ucaseFirst(string) {
 export function reverseString(string) {
   return string.split("").reverse().join("");
 }
+
+/**
+ * Given an integer, returns a string containing the same integer with additional thousands separators.
+ *
+ * @param {number} num An integer.
+ * @param {string} [sep] The thousands separator to use.
+ * @return {string} The same integer with thousands separators.
+ */
+export function separateIntThousands(num, sep = ",") {
+  return num
+    .toString()
+    .split("")
+    .reverse()
+    .map((d, i, a) =>
+      (i + 1) % 3 === 0 && i !== a.length - 1 ? `${sep}${d}` : d
+    )
+    .reverse()
+    .join("");
+}
