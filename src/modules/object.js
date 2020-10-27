@@ -37,7 +37,7 @@ const defaultObjectComparator = (a, b) => (a < b ? -1 : a > b ? 1 : 0);
  *
  * @param {Object} obj An object.
  * @param {Object} [options] An optional object with further options.
- * @param {(a: *, c: *) => number} [options.comparator] A comparator function receiving two values as arguments which must return -1 if the first
+ * @param {(a: *, c: *) => number} [options.comparator] A comparator function receiving two values as arguments which must return a number less than 0 if the first
  *                                                      given value is the new minimum value.
  * @param {boolean} [options.returnAsKeyVal] True to return an object containing two properties `value` and `key`, namely the minimum value's key
  *                                           (`key` property) as well as the minimum value itself (`value` property).
@@ -50,7 +50,7 @@ export const objectMin = (
   const min = { key: void 0, value: void 0 };
   for (const key in obj) {
     const value = obj[key];
-    if (typeof min.key === "undefined" || comparator(value, min.value) === -1) {
+    if (typeof min.key === "undefined" || comparator(value, min.value) < 0) {
       min.key = key;
       min.value = value;
     }
