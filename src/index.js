@@ -150,6 +150,7 @@ export {
   parseQueryStringArgsMultiDim,
   detectWrapped,
   maxNestingLevel,
+  getScrollableAncestor,
 } from "./modules/web";
 export {
   randomInt,

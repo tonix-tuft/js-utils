@@ -850,3 +850,26 @@ export function maxNestingLevel(el) {
   }
   return max + 1;
 }
+
+/**
+ * @type {RegExp}
+ */
+const REGEXP_SCROLL_PARENT = /^(visible|hidden)/;
+
+/**
+ * Get the first scrollable ancestor of an element.
+ *
+ * @param {Element} el The element to use as the base from which to determine its first scrollable ancestor.
+ * @return {Element} The first scrollable ancestor element scroll, or the document body.
+ */
+export const getScrollableAncestor = el =>
+  !(el instanceof HTMLElement) || typeof window.getComputedStyle !== "function"
+    ? null
+    : el.scrollHeight >= el.clientHeight &&
+      !REGEXP_SCROLL_PARENT.test(
+        window.getComputedStyle(el).overflowY || "visible"
+      )
+    ? el
+    : getScrollableAncestor(el.parentElement) ||
+      document.scrollingElement ||
+      document.body;
