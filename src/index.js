@@ -83,6 +83,7 @@ export {
   mapYield,
   str,
   mapObject,
+  mapToObject,
   propSelection,
   prototypeChainProperties,
   prop,

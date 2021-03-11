@@ -1170,6 +1170,25 @@ export const mapObject = (obj, fn) =>
   );
 
 /**
+ * Maps an array to an object.
+ *
+ * @param {Array} arr An array.
+ * @param {Function} fn A function receiving the current value, its index as well as the whole array "arr"
+ *                      as parameters returning a tuple with the key at index 0 and the value at index 1 to set on the object.
+ * @returns {Object} The array mapped to an object.
+ */
+export const mapToObject = (arr, fn) => {
+  let res;
+  return arr.reduce(
+    (carry, ...rest) =>
+      ((res = fn(...rest)) && false) ||
+      ((carry[res[0]] = res[1]) && false) ||
+      carry,
+    {}
+  );
+};
+
+/**
  * Selects the truthy properties of an object or the properties of an object
  * passing a test specified with a callback function.
  *
