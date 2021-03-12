@@ -873,3 +873,15 @@ export const getScrollableAncestor = el =>
     : getScrollableAncestor(el.parentElement) ||
       document.scrollingElement ||
       document.body;
+
+/**
+ * Smoothly scrolls to the top of a scrollable element or the browser's window.
+ *
+ * @param {Element} [el] The element. Defaults to "window".
+ * @return {undefined}
+ */
+export const smoothScrollToTop = (el = window) =>
+  el.scroll({
+    top: 0,
+    behavior: "smooth",
+  });

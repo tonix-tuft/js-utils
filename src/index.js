@@ -152,6 +152,7 @@ export {
   detectWrapped,
   maxNestingLevel,
   getScrollableAncestor,
+  smoothScrollToTop,
 } from "./modules/web";
 export {
   randomInt,
