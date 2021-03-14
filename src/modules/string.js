@@ -155,8 +155,8 @@ export function trimRight(str, characterMask) {
  */
 export function concatWithInnerOuterSeparators(
   arrayToConcat,
-  outerSeparator,
-  innerSeparator
+  outerSeparator = " ",
+  innerSeparator = " "
 ) {
   const toConcatFinally = [];
   for (const value of arrayToConcat) {
