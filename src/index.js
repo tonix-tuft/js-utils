@@ -163,7 +163,12 @@ export {
   uuid,
   noncanonicalUUID,
 } from "./modules/rand";
-export { time, msToTime, millisecToSec } from "./modules/time";
+export {
+  time,
+  msToTime,
+  millisecToSec,
+  secondsToTimeString,
+} from "./modules/time";
 export {
   escapeRegExp,
   trimCharacterMask,

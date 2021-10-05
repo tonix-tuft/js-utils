@@ -23,6 +23,9 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
+import { isIntegerOrIntegerStr } from "..";
+import { intDiv } from "./math";
+
 /**
  * Time-related utility functions.
  */
@@ -64,3 +67,28 @@ export function msToTime(ms) {
 export function millisecToSec(millisec) {
   return millisec * 0.001;
 }
+
+/**
+ * Converts seconds to a `minutes:seconds` or `hours:minutes:seconds` time string
+ * (if the second parameter is an object with `includeHours` set to a truthy value),
+ * e.g. `123` becomes `"02:03"`, or `"00:02:03"` if `includeHours` is truthy.
+ *
+ * @param {number} secs The number of seconds.
+ * @param {Object} options Options.
+ * @param {Object.boolean} options.includeHours "true" to include hours (defaults to "false" if omitted).
+ * @return {string} The time string.
+ */
+export const secondsToTimeString = (secs, { includeHours = false } = {}) => {
+  if (!secs || !isIntegerOrIntegerStr(secs)) {
+    return includeHours ? "00:00:00" : "00:00";
+  }
+  let hours = "";
+  let minutes = intDiv(secs, 60);
+  if (includeHours) {
+    hours = `${(intDiv(secs, 60 * 60) + "").padStart(2, "0")}:`;
+    minutes = minutes % 60;
+  }
+  minutes += "";
+  const seconds = (secs % 60) + "";
+  return `${hours}${minutes.padStart(2, "0")}:${seconds.padStart(2, "0")}`;
+};
