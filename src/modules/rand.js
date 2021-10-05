@@ -156,3 +156,10 @@ const shuffleArrayRandomly = array => {
 export function randomArrayShuffle(array) {
   return shuffleArrayRandomly(Object.keys(array)).map(i => array[i]);
 }
+
+/**
+ * Generates a random string.
+ *
+ * @return {string} A random string.
+ */
+export const randomString = () => Math.random().toString(36).substr(2);
