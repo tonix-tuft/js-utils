@@ -23,6 +23,8 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
+import { hashString } from "..";
+
 /**
  * Color-related utility functions.
  */
@@ -41,3 +43,25 @@ export function getLuminance(color) {
   const b = c & 0x0000ff;
   return 0.299 * r + 0.587 * g + 0.114 * b;
 }
+
+/**
+ * Converts an integer to an RGB hex (hexadecimal) string.
+ *
+ * @param {number} i An integer.
+ * @return {string} An RGB hex string (uppercase).
+ */
+export function intToRGBHexString(i) {
+  const c = (i & 0x00ffffff).toString(16).toUpperCase();
+  return "00000".substring(0, 6 - c.length) + c;
+}
+
+/**
+ * Converts a string to an RGB hex (hexadecimal) string representing a color.
+ *
+ * @param {string} str The string.
+ * @return {string} The color as an RGB hex string (uppercase).
+ */
+export const colorFromString = str => {
+  const hash = hashString(str);
+  return intToRGBHexString(hash);
+};

@@ -193,7 +193,11 @@ export {
   toggleNthBit,
   checkNthBitOn,
 } from "./modules/bitwise";
-export { getLuminance } from "./modules/color";
+export {
+  getLuminance,
+  intToRGBHexString,
+  colorFromString,
+} from "./modules/color";
 export {
   yieldCombinationsWithoutRepetition,
   uniqueProgressiveIncrementalCombinations,
