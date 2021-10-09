@@ -23,7 +23,7 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import { hashString } from "..";
+import { hashString } from "./hash";
 
 /**
  * Color-related utility functions.

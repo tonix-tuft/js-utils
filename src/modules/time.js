@@ -23,7 +23,7 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import { isIntegerOrIntegerStr } from "..";
+import { isIntegerOrIntegerStr } from "./core";
 import { intDiv } from "./math";
 
 /**
