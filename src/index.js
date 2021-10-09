@@ -158,6 +158,7 @@ export {
   randomInt,
   randomFloat,
   randomStr,
+  randomString,
   randomDifferentFromValue,
   randomArrayShuffle,
   uuid,
