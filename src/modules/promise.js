@@ -27,7 +27,7 @@
  * Promise-related utility functions.
  */
 
-import { uniqueId, isArray } from "./core";
+import { uniqueId, isArray, noOpFn } from "./core";
 
 /**
  * Creates a new timeout promise which will resolve after the given milliseconds timeout.
@@ -74,12 +74,12 @@ export function maxDelayFallbackPromise({
   maxDelayMs,
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   onFallback = () => {},
-  fallbackMinDelayMs
+  fallbackMinDelayMs,
 } = {}) {
   const uniqueIdentifier = uniqueId();
   return Promise.race([
     promise,
-    timeout(maxDelayMs).then(() => uniqueIdentifier)
+    timeout(maxDelayMs).then(() => uniqueIdentifier),
   ]).then(value => {
     if (value === uniqueIdentifier) {
       onFallback();
@@ -133,4 +133,85 @@ export const composeAsync = (...funcs) => x => {
     }
     return promise;
   }, Promise.resolve(x));
+};
+
+/**
+ * Returns a promise which resolves as soon as at least some of the promises given as parameter are fulfilled,
+ * and rejects if the minimum number of resolved promises ("minNumberOfFulfilledPromises") is not reached after all the given promises are settled.
+ *
+ * @param {Promise[]} promises An array of promises. If an empty array is given, then the returned promise will never resolve (will remain in pending state forever).
+ * @param {number} minNumberOfFulfilledPromises The minimum number of the given promises that must be fulfilled to consider the returned promise fulfilled
+ *                                              (e.g. at least 3 of the given promises must be fulfilled).
+ *                                              Defaults to 1.
+ *                                              If "minNumberOfFulfilledPromises" is less than 0, then it is treated as if it was 1.
+ *                                              If "minNumberOfFulfilledPromises" is greater than the number of the given promises "promises",
+ *                                              then "minNumberOfFulfilledPromises" is treated as if it was "promises.length".
+ * @return {Promise} A new promise. The promise either fulfills or rejects with an object having the following properties:
+ *
+ *                       - fulfilled: An array, each element being an object having the following properties:
+ *
+ *                           - promise: The fulfilled promise of the array of promises "promises";
+ *                           - value: The value that the promise has resolved with;
+ *                           - index: The positional index of the given array of promises "promises";
+ *
+ *                       - rejected: An array, each element being an object having the following properties:
+ *
+ *                           - promise: The rejected promise of the array of promises "promises";
+ *                           - reason: The reason that the promise has rejected with;
+ *                           - index: The positional index of the given array of promises "promises";
+ *
+ *                   The "fulfilled" array will have "minNumberOfFulfilledPromises" elements.
+ */
+export const asSoonAtLeastSomeFulfilled = (
+  promises,
+  minNumberOfFulfilledPromises = 1
+) => {
+  const length = promises.length;
+  const unresolvablePromise = new Promise(noOpFn);
+  let promiseToReturn = unresolvablePromise;
+  if (minNumberOfFulfilledPromises < 0) {
+    minNumberOfFulfilledPromises = 1;
+  } else if (minNumberOfFulfilledPromises > length) {
+    minNumberOfFulfilledPromises = length;
+  }
+  if (length > 0) {
+    let settledCount = 0;
+    let isPromiseSettled = false;
+    promiseToReturn = new Promise((resolve, reject) => {
+      const fulfilled = [];
+      const rejected = [];
+      promises.map((promise, index) => {
+        let isFulfilled = false;
+        promise
+          .then(value => {
+            if (!isPromiseSettled) {
+              isFulfilled = true;
+              settledCount++;
+              fulfilled.push({
+                promise,
+                index,
+                value,
+              });
+              if (fulfilled.length === minNumberOfFulfilledPromises) {
+                isPromiseSettled = true;
+                resolve({ fulfilled, rejected });
+              }
+            }
+          })
+          .catch(reason => {
+            if (!isPromiseSettled) {
+              if (!isFulfilled) {
+                settledCount++;
+                rejected.push({ promise, index, reason });
+                if (settledCount === length) {
+                  isPromiseSettled = true;
+                  reject({ fulfilled, rejected });
+                }
+              }
+            }
+          });
+      });
+    });
+  }
+  return promiseToReturn;
 };

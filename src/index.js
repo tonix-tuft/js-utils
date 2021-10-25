@@ -118,6 +118,7 @@ export {
   maxDelayFallbackPromise,
   applyAsync,
   composeAsync,
+  asSoonAtLeastSomeFulfilled,
 } from "./modules/promise";
 export {
   buildQueryString,
