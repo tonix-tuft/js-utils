@@ -97,3 +97,37 @@ export function onePassStringHash(str, hash = 0) {
   nextHash ^= n;
   return nextHash;
 }
+
+/**
+ * Given a sequence of integers, computes the hash of their sum so that two different sequences
+ * will have the same hash if the sum of their integers will be the same (the overall sum of the sequences may be higher than `Number.MAX_SAFE_INTEGER`).
+ *
+ * Example:
+ *
+ * ```
+ * intSumHash([1,2,3,4,5,6]); // 21
+ * intSumHash([1,2,3,4,5,6]) === intSumHash([2,3,1,4,6,5]); // true
+ * intSumHash([1,2,3,4,5,6]) === intSumHash([5,1,10,4,1]); // true
+ * intSumHash([1,2,3,4,5,6]) === intSumHash([21]); // true
+ * intSumHash([1,2,3,4,5,6]) === intSumHash([7, 7, 7]); // true
+ * ```
+ *
+ * @param {number[]} seq A sequence of integers (an array).
+ * @return {number} The hash of the sum of the sequence of integers.
+ */
+export function intSumHash(seq) {
+  const BIG_PRIME = 999999999989;
+  const MAX_SAFE_INTEGER_DIV_2_FLOOR = Math.floor(Number.MAX_SAFE_INTEGER / 2);
+  let h = 0;
+  for (let i = 0; i < seq.length; i++) {
+    let value = seq[i];
+    if (h > MAX_SAFE_INTEGER_DIV_2_FLOOR) {
+      h = h % BIG_PRIME;
+    }
+    if (value > MAX_SAFE_INTEGER_DIV_2_FLOOR) {
+      value = value % BIG_PRIME;
+    }
+    h += value;
+  }
+  return h;
+}

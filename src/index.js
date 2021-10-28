@@ -111,7 +111,12 @@ export {
   identityArgsFn,
   chain,
 } from "./modules/fn";
-export { stringHashArray, hashString, onePassStringHash } from "./modules/hash";
+export {
+  stringHashArray,
+  hashString,
+  onePassStringHash,
+  intSumHash,
+} from "./modules/hash";
 export {
   timeout,
   minDelayPromise,

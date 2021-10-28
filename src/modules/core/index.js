@@ -503,19 +503,22 @@ export function deepObjectCompare(obj1, obj2) {
 /**
  * Nests the properties of an object using an array of props definitions and defaults.
  * Returns the leaf.
+ *
  * Example:
  *
- *      var obj = {};
- *      var nest = [{a: {}}, {b: {}}, {c: {}}, {d: {}}, {e: {}}, {f: {}}, {g: {}}, {h: {}} ];
- *      var leaf = nestedObjectConstructValue(obj, nest);
- *      leaf.i = 'i';
- *      leaf.l = { m: "m" };
- *      JSON.stringify(obj); // {"a":{"b":{"c":{"d":{"e":{"f":{"g":{"h":{"i":"i","l":{"m":"m"}}}}}}}}}}
- *      nest = nest.concat([ {n: {}}, {o: {}}, {p: {}} ]);
- *      var pLeaf = nestedObjectConstructValue(obj, nest);
- *      pLeaf.q = 'q';
- *      nest = nest.concat([ {q: {}} ]);
- *      nestedObjectConstructValue(obj, nest); // 'q'
+ * ```
+ * const obj = {};
+ * let nest = [{a: {}}, {b: {}}, {c: {}}, {d: {}}, {e: {}}, {f: {}}, {g: {}}, {h: {}} ];
+ * const leaf = nestedObjectConstructValue(obj, nest);
+ * leaf.i = 'i';
+ * leaf.l = { m: "m" };
+ * JSON.stringify(obj); // {"a":{"b":{"c":{"d":{"e":{"f":{"g":{"h":{"i":"i","l":{"m":"m"}}}}}}}}}}
+ * nest = nest.concat([ {n: {}}, {o: {}}, {p: {}} ]);
+ * var pLeaf = nestedObjectConstructValue(obj, nest);
+ * pLeaf.q = 'q';
+ * nest = nest.concat([ {q: {}} ]);
+ * nestedObjectConstructValue(obj, nest); // 'q'
+ * ```
  *
  * @param {Object} root The root object.
  * @param {Array} nestedPropsDef The nexted props definitions.
