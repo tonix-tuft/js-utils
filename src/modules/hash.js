@@ -107,11 +107,21 @@ export function onePassStringHash(str, hash = 0) {
  * Example:
  *
  * ```
- * intSumHash([1,2,3,4,5,6]); // 21
- * intSumHash([1,2,3,4,5,6]) === intSumHash([2,3,1,4,6,5]); // true
- * intSumHash([1,2,3,4,5,6]) === intSumHash([5,1,10,4,1]); // true
- * intSumHash([1,2,3,4,5,6]) === intSumHash([21]); // true
- * intSumHash([1,2,3,4,5,6]) === intSumHash([7, 7, 7]); // true
+ * intSumHash([1, 2, 3, 4, 5, 6]); // 21
+ * intSumHash([1, 2, 3, 4, 5, 6]) === intSumHash([2, 3, 1, 4, 6, 5]); // true
+ * intSumHash([1, 2, 3, 4, 5, 6]) === intSumHash([5, 1, 10, 4, 1]); // true
+ * intSumHash([1, 2, 3, 4, 5, 6]) === intSumHash([21]); // true
+ * intSumHash([1, 2, 3, 4, 5, 6]) === intSumHash([7, 7, 7]); // true
+ *
+ * intSumHash([1, 2]); // 3
+ *
+ * const BIG_PRIME = 999999999989;
+ * intSumHash([4504 * BIG_PRIME + 1, 4504 * BIG_PRIME + 2]); // 4503999999950459
+ *
+ * intSumHash([Number.MAX_SAFE_INTEGER - 1, Number.MAX_SAFE_INTEGER - 2, Number.MAX_SAFE_INTEGER - 90, 10, 13]); // 9007597764421056
+ * intSumHash([9007597764421056, -10, 2, 3, 5]); // 9007597764421056
+ * intSumHash([1, 2, 3, 20, 9007597764421056 - (20 + 3 + 2 + 1)]); // 9007597764421056
+ * intSumHash([4, 1, 2, 1, 1, 1, 20, 9007597764421056 - 10, -86, 70, -25, 1, 7, 13]); // 9007597764421056
  * ```
  *
  * @param {number[]} seq A sequence of integers (an array).
@@ -123,11 +133,15 @@ export function intSumHash(seq) {
   let h = 0;
   for (let i = 0; i < seq.length; i++) {
     let value = seq[i];
-    if (h > MAX_SAFE_INTEGER_DIV_2_FLOOR) {
-      h = h % BIG_PRIME;
-    }
-    if (value > MAX_SAFE_INTEGER_DIV_2_FLOOR) {
-      value = value % BIG_PRIME;
+    if (
+      h > MAX_SAFE_INTEGER_DIV_2_FLOOR &&
+      value > MAX_SAFE_INTEGER_DIV_2_FLOOR
+    ) {
+      if (h > MAX_SAFE_INTEGER_DIV_2_FLOOR) {
+        h = h % BIG_PRIME;
+      } else if (value > MAX_SAFE_INTEGER_DIV_2_FLOOR) {
+        value = value % BIG_PRIME;
+      }
     }
     h += value;
   }
