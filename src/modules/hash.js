@@ -102,6 +102,8 @@ export function onePassStringHash(str, hash = 0) {
  * Given a sequence of integers, computes the hash of their sum so that two different sequences
  * will have the same hash if the sum of their integers will be the same (the overall sum of the sequences may be higher than `Number.MAX_SAFE_INTEGER`).
  *
+ * @see https://stackoverflow.com/questions/69749629/hash-function-that-returns-the-same-hash-for-a-sum-even-if-different-terms-lead/69749873
+ *
  * Example:
  *
  * ```
