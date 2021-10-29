@@ -115,35 +115,29 @@ export function onePassStringHash(str, hash = 0) {
  *
  * intSumHash([1, 2]); // 3
  *
- * const BIG_PRIME = 999999999989;
- * intSumHash([4504 * BIG_PRIME + 1, 4504 * BIG_PRIME + 2]); // 4503999999950459
+ * const LARGE_PRIME = 999999999989;
+ * intSumHash([4504 * LARGE_PRIME + 1, 4504 * LARGE_PRIME + 2]); // 800745160017
  *
- * intSumHash([Number.MAX_SAFE_INTEGER - 1, Number.MAX_SAFE_INTEGER - 2, Number.MAX_SAFE_INTEGER - 90, 10, 13]); // 9007597764421056
- * intSumHash([9007597764421056, -10, 2, 3, 5]); // 9007597764421056
- * intSumHash([1, 2, 3, 20, 9007597764421056 - (20 + 3 + 2 + 1)]); // 9007597764421056
- * intSumHash([4, 1, 2, 1, 1, 1, 20, 9007597764421056 - 10, -86, 70, -25, 1, 7, 13]); // 9007597764421056
+ * intSumHash([Number.MAX_SAFE_INTEGER - 1, Number.MAX_SAFE_INTEGER - 2, Number.MAX_SAFE_INTEGER - 90, 10, 13]); // 209
+ * intSumHash([Number.MAX_SAFE_INTEGER - 2, Number.MAX_SAFE_INTEGER - 90, 10, Number.MAX_SAFE_INTEGER - 1, 13]); // 209
+ * intSumHash([209, -10, 2, 3, 5]); // 209
+ * intSumHash([1, 2, 3, 20, 209 - (20 + 3 + 2 + 1)]); // 209
+ * intSumHash([4, 1, 2, 1, 1, 1, 20, 209 - 10, -86, 70, -25, 1, 7, 13]); // 209
+ *
+ * intSumHash([9007597764421056, -10, 2, 3, 5]); // 398509680158
+ * intSumHash([1, 2, 3, 20, 9007597764421056 - (20 + 3 + 2 + 1)]); // 398509680158
+ * intSumHash([4, 1, 2, 1, 1, 1, 20, 9007597764421056 - 10, -86, 70, -25, 1, 7, 13]); // 398509680158
  * ```
  *
  * @param {number[]} seq A sequence of integers (an array).
  * @return {number} The hash of the sum of the sequence of integers.
  */
 export function intSumHash(seq) {
-  const BIG_PRIME = 999999999989;
-  const MAX_SAFE_INTEGER_DIV_2_FLOOR = Math.floor(Number.MAX_SAFE_INTEGER / 2);
+  const BIG_PRIME = 4503599627370449;
   let h = 0;
   for (let i = 0; i < seq.length; i++) {
-    let value = seq[i];
-    if (
-      h > MAX_SAFE_INTEGER_DIV_2_FLOOR &&
-      value > MAX_SAFE_INTEGER_DIV_2_FLOOR
-    ) {
-      if (h > MAX_SAFE_INTEGER_DIV_2_FLOOR) {
-        h = h % BIG_PRIME;
-      } else if (value > MAX_SAFE_INTEGER_DIV_2_FLOOR) {
-        value = value % BIG_PRIME;
-      }
-    }
-    h += value;
+    const value = seq[i];
+    h = (h % BIG_PRIME) + (value % BIG_PRIME);
   }
   return h;
 }
