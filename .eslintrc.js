@@ -4,30 +4,30 @@ module.exports = {
     es6: true,
     browser: true,
     commonjs: true,
-    node: true
+    node: true,
   },
   extends: [
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended"
+    "plugin:@typescript-eslint/recommended",
   ],
   globals: {
     Atomics: "readonly",
-    SharedArrayBuffer: "readonly"
+    SharedArrayBuffer: "readonly",
   },
   parserOptions: {
     ecmaFeatures: {
-      jsx: false
+      jsx: false,
     },
     ecmaVersion: 2018,
-    sourceType: "module"
+    sourceType: "module",
   },
   plugins: ["@typescript-eslint"],
   rules: {
     "no-unused-vars": ["error", { ignoreRestSiblings: true }],
     "no-console": "error",
     "@typescript-eslint/explicit-function-return-type": "off",
-    "@typescript-eslint/no-unused-vars": "off"
+    "@typescript-eslint/no-unused-vars": "off",
   },
   overrides: [
     {
@@ -35,8 +35,8 @@ module.exports = {
       files: ["*.ts", "*.tsx"],
       rules: {
         "@typescript-eslint/explicit-function-return-type": "off",
-        "@typescript-eslint/no-unused-vars": ["error"]
-      }
-    }
-  ]
+        "@typescript-eslint/no-unused-vars": ["error"],
+      },
+    },
+  ],
 };
