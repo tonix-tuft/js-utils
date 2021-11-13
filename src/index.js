@@ -159,6 +159,7 @@ export {
   maxNestingLevel,
   getScrollableAncestor,
   smoothScrollToTop,
+  downloadFile,
 } from "./modules/web";
 export {
   randomInt,

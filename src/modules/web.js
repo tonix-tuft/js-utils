@@ -885,3 +885,18 @@ export const smoothScrollToTop = (el = window) =>
     top: 0,
     behavior: "smooth",
   });
+
+/**
+ * Download a file.
+ *
+ * @see https://stackoverflow.com/questions/1066452/easiest-way-to-open-a-download-window-without-navigating-away-from-the-page#answer-43523297
+ *
+ * @param {string} fileURI The URI of the file to download.
+ * @return {undefined}
+ */
+export function downloadFile(fileURI) {
+  var link = document.createElement("a");
+  link.href = fileURI;
+  link.download = fileURI.substr(fileURI.lastIndexOf("/") + 1);
+  link.click();
+}
