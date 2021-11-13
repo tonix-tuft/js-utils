@@ -887,7 +887,7 @@ export const smoothScrollToTop = (el = window) =>
   });
 
 /**
- * Download a file.
+ * Downloads a file without opening a new browser's tab.
  *
  * @see https://stackoverflow.com/questions/1066452/easiest-way-to-open-a-download-window-without-navigating-away-from-the-page#answer-43523297
  *
