@@ -23,45 +23,16 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import { hashString } from "./hash";
-
 /**
- * Color-related utility functions.
- */
-
-/**
- * Gets a color's luminance.
+ * Returns true if the given string is a valid HTTP URL (either HTTP or HTTPS).
  *
- * @param {number} color Color int value (RGB).
- * @return {number} An int greater than 160 if the color is considered dark and less than or
- *                  equal to 160 if the color is considered light.
+ * @see https://regex101.com/r/HjBD9T/1
+ *
+ * @param {string} maybeValidHttpUrl A string that's maybe a valid HTTP URL.
+ * @return {boolean} True if the given string is a valid HTTP URL, false otherwise.
  */
-export function getLuminance(color) {
-  const c = parseInt(color, 16);
-  const r = (c & 0xff0000) >> 16;
-  const g = (c & 0x00ff00) >> 8;
-  const b = c & 0x0000ff;
-  return 0.299 * r + 0.587 * g + 0.114 * b;
+export function isValidHttpUrl(maybeValidHttpUrl) {
+  return /^(?:(?:https?:)\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:[/?#]\S*)?$/i.test(
+    maybeValidHttpUrl
+  );
 }
-
-/**
- * Converts an integer to an RGB hex (hexadecimal) string.
- *
- * @param {number} i An integer.
- * @return {string} An RGB hex string (uppercase).
- */
-export function intToRGBHexString(i) {
-  const c = (i & 0x00ffffff).toString(16).toUpperCase();
-  return "00000".substring(0, 6 - c.length) + c;
-}
-
-/**
- * Converts a string to an RGB hex (hexadecimal) string representing a color.
- *
- * @param {string} str The string.
- * @return {string} The color as an RGB hex string (uppercase).
- */
-export const colorFromString = str => {
-  const hash = hashString(str);
-  return intToRGBHexString(hash);
-};

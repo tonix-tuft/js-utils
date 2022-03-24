@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Anton Bagdatyev (Tonix)
+ * Copyright (c) 2022 Anton Bagdatyev (Tonix)
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -32,7 +32,7 @@ import { isUndefined } from "./core";
 /**
  * Delays execution of a callback and cancels a previously registered callback if it wasn't executed yet.
  */
-export const delay = (function() {
+export const delay = (function () {
   let timer = 0;
 
   /**
@@ -42,9 +42,9 @@ export const delay = (function() {
    * @param {number} ms Milliseconds to wait before executing the callback.
    * @return {undefined}
    */
-  return function(callback, ms) {
+  return function (callback, ms) {
     clearTimeout(timer);
-    timer = setTimeout(function() {
+    timer = setTimeout(function () {
       callback();
     }, ms);
   };
@@ -59,9 +59,9 @@ export const delay = (function() {
  */
 export function debounce(fn, wait) {
   let timer = void 0;
-  return function(...args) {
+  return function (...args) {
     !isUndefined(timer) && clearTimeout(timer);
-    timer = setTimeout(function() {
+    timer = setTimeout(function () {
       fn(...args);
     }, wait);
   };
@@ -78,7 +78,7 @@ export function debounce(fn, wait) {
  */
 export function throttle(fn, wait) {
   let time = Date.now();
-  return function(...args) {
+  return function (...args) {
     if (time + wait - Date.now() < 0) {
       fn(...args);
       time = Date.now();

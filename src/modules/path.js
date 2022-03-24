@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Anton Bagdatyev (Tonix)
+ * Copyright (c) 2022 Anton Bagdatyev (Tonix)
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -101,7 +101,7 @@ export function pathinfo(path, options) {
     PATHINFO_BASENAME: 2,
     PATHINFO_EXTENSION: 4,
     PATHINFO_FILENAME: 8,
-    PATHINFO_ALL: 0
+    PATHINFO_ALL: 0,
   };
   // PATHINFO_ALL sums up all previously defined PATHINFOs (could just pre-calculate)
   for (optName in OPTS) {
@@ -121,7 +121,7 @@ export function pathinfo(path, options) {
     options = optTemp;
   }
   // Internal Functions
-  const _getExt = function(path) {
+  const _getExt = function (path) {
     const str = path + "";
     const dotP = str.lastIndexOf(".") + 1;
     return !dotP ? false : dotP !== str.length ? str.substr(dotP) : "";
