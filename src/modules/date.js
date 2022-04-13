@@ -23,7 +23,7 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import { trim } from "..";
+import { trim } from "./string";
 
 /**
  * Tests if the given value is a valid date.
